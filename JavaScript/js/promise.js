@@ -1,16 +1,8 @@
-////// first classs function
-
-const res = heyhello()
-console.log(res)
-
-function greet(helloFunc , name){
-    console.log(`${helloFunc()} ${name}`)
+function fistFunction(){
+    return function(){
+        console.log("hello")
+    }
 }
 
-greet(heyhello , 'javohir')
-
-function heyhello(){
-    return "hello"
-}
-
-
+const res = fistFunction()
+res() //// first class function
