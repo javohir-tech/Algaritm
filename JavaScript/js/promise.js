@@ -1,15 +1,23 @@
-const done  =  false 
+const done =  true
 
-const myPromise =  new Promise((resolve ,  reject)=>{
-    if(done){
-        const workDone =  'ishladi bratishka'
-        resolve(workDone)
-    }else{
-        const sabab = "afsuss  ishlamadi"
-        reject(sabab)
-    }
-}).then(res=>{
+const  promise1 = new Promise((resolve , reject)=>{
+    if(done)  resolve("done1")
+    else reject('error1')
+})
+const  promise2 = new Promise((resolve , reject)=>{
+    if(!done)  resolve("done2")
+    else reject('error2')
+})
+const  promise3 = new Promise((resolve , reject)=>{
+    if(done) resolve("done3")
+    else reject('error3')
+})
+
+
+const all =  Promise.race([promise1 , promise2 , promise3])
+
+all.then(res=>{
     console.log(res)
-}).catch((err)=>{
+}).catch(err=>{
     console.log(err)
 })
