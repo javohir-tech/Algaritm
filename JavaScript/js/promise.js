@@ -1,8 +1,3 @@
-function fistFunction(){
-    return function(){
-        console.log("hello")
-    }
-}
+const test= ['a' , 'b' , 'c']
 
-const res = fistFunction()
-res() //// first class function
+console.log(test.includes('a'))
