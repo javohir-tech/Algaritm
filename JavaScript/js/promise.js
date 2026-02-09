@@ -1,23 +1,15 @@
-const metMethods = {
-    printMyname() {
-        console.log(this.name)
-    },
+const done  =  false 
 
-    printMyAge() {
-        console.log(this.age)
-    },
-
-    printFullname(surname){
-        console.log(this.name , surname)
+const myPromise =  new Promise((resolve ,  reject)=>{
+    if(done){
+        const workDone =  'ishladi bratishka'
+        resolve(workDone)
+    }else{
+        const sabab = "afsuss  ishlamadi"
+        reject(sabab)
     }
-}
-
-const emp1 = { name: 'javohir', age: 21 }
-const emp2 = { name: 'jalol', age: 20 }
-
-// metMethods.printMyname.call(emp1)
-// metMethods.printMyname.call(emp2)
-// metMethods.printMyAge.call(emp1)
-// metMethods.printMyAge.call(emp2)
-// metMethods.printFullname.call(emp1 , 'suvonov')
-// metMethods.printFullname.call(emp2 , 'toshtemirov')
+}).then(res=>{
+    console.log(res)
+}).catch((err)=>{
+    console.log(err)
+})
