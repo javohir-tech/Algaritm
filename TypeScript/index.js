@@ -1,7 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const sellary = 10000;
-const bonus = 5000;
-const sum = sellary + bonus;
-console.log(sum);
+const person = {
+    first_name: "Javohir",
+    last_name: "Suvonov",
+    age: 21,
+    address: {
+        country: "Uzbekistan",
+    },
+};
+const getFullName = (data) => {
+    return `${data.first_name} ${data.last_name} ${data.age}`;
+};
+const fullName = getFullName(person);
+console.log(fullName);
 //# sourceMappingURL=index.js.map
