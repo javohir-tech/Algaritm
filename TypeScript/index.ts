@@ -1,15 +1,9 @@
-const person = {
-  first_name: "Javohir",
-  last_name: "Suvonov",
-  age: 21,
-  address: {
-    country: "Uzbekistan",
-  },
-};
+const cars: string[] = ["bmw", "audi", "lexus"];
+const nums: number[] = [1, 2, 4, 5];
+const bools: boolean[] = [true, false, true, false, true, true];
 
-const getFullName = (data: { first_name: string; last_name: string ; age : number }) => {
-  return `${data.first_name} ${data.last_name} ${data.age}`;
-};
+const toupparcase = cars.map((item) => item.toUpperCase()).filter(item => item.startsWith('b'));
+const snums = nums.map(item => `Numer ${item}`)
 
-const fullName = getFullName(person)
-console.log(fullName)
+console.log(snums)
+console.log(toupparcase);
