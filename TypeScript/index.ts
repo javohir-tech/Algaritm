@@ -68,4 +68,4 @@ const numbers: ReadonlyArray<number | string> = [1, 2, 3, 4, "uch"];
 
 // numbers.push("salom")
 
-console.log(numbers)
+// console.log(numbers)
