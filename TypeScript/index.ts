@@ -1,9 +1,45 @@
-const cars: string[] = ["bmw", "audi", "lexus"];
-const nums: number[] = [1, 2, 4, 5];
-const bools: boolean[] = [true, false, true, false, true, true];
+const data : [string , number] = ['suvonov' , 22]
+// error  Type 'string' is not assignable to type 'number'.
+// const data : [string , number] = [22 , "suvonov"]
+console.log(data[0])
+console.log(data[1])
+// Tuple type '[string, number]' of length '2' has no element at index '2'.
+// console.log(data[2])
 
-const toupparcase = cars.map((item) => item.toUpperCase()).filter(item => item.startsWith('b'));
-const snums = nums.map(item => `Numer ${item}`)
+// data.push("javohir")
+// Tuple type '[string, number]' of length '2' has no element at index '2'.
+// console.log(data[2])
 
-console.log(snums)
-console.log(toupparcase);
+console.log(data);
+
+// string | number union type (string | boolean | number va hk)
+let cordinates : [number , string | number] = [98 , 23]
+
+cordinates = [22 , 'east']
+
+// Type 'string' is not assignable to type 'number'.
+// cordinates = ['west' , 'east']
+
+console.log(cordinates)
+
+
+// tuple for  functions 
+const myFunction = () : [string , number | string | boolean] =>{
+    return ["javohir" , 22]
+}
+
+const res = myFunction()
+console.log(res)
+
+// console.log(res[0])
+// console.log(res[1])
+
+// Tuple type '[string, string | number | boolean]' of length '2' has no element at index '2'.
+// console.log(res[2])
+
+const [firstName , age ] = myFunction()
+// Tuple type '[string, string | number | boolean]' of length '2' has no element at index '2'.
+// const [firstName , age , isMerried] = myFunction()
+console.log(firstName , age)
+
+
