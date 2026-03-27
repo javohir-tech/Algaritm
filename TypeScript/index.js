@@ -1,4 +1,5 @@
 "use strict";
+//  ====================== TUPLE =======================
 Object.defineProperty(exports, "__esModule", { value: true });
 const data = ['suvonov', 22];
 // error  Type 'string' is not assignable to type 'number'.
@@ -31,4 +32,8 @@ const [firstName, age] = myFunction();
 // Tuple type '[string, string | number | boolean]' of length '2' has no element at index '2'.
 // const [firstName , age , isMerried] = myFunction()
 console.log(firstName, age);
+const person = ['doe', 22];
+person[0] = 'john';
+person[1] = 23;
+console.log(person);
 //# sourceMappingURL=index.js.map

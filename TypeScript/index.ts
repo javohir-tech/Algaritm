@@ -1,3 +1,5 @@
+//  ====================== TUPLE =======================
+
 const data : [string , number] = ['suvonov' , 22]
 // error  Type 'string' is not assignable to type 'number'.
 // const data : [string , number] = [22 , "suvonov"]
@@ -41,5 +43,13 @@ const [firstName , age ] = myFunction()
 // Tuple type '[string, string | number | boolean]' of length '2' has no element at index '2'.
 // const [firstName , age , isMerried] = myFunction()
 console.log(firstName , age)
+
+//  tuple qiymatlarini orgartirsa boladi faqat array uzunligini va har bitta indexdagi ozgaruvchinni  type i qattiy belgilanadi 
+const person : [string , number] = ['doe' , 22]
+
+person[0]= 'john'
+person[1] = 23
+
+console.log(person)
 
 
