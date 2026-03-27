@@ -1,55 +1,71 @@
-//  ====================== TUPLE =======================
+// ======================= READONLY ====================
+const admins: readonly number[] = [1, 2, 3, 4, 5];
 
-const data : [string , number] = ['suvonov' , 22]
-// error  Type 'string' is not assignable to type 'number'.
-// const data : [string , number] = [22 , "suvonov"]
-console.log(data[0])
-console.log(data[1])
-// Tuple type '[string, number]' of length '2' has no element at index '2'.
-// console.log(data[2])
+// Property 'push' does not exist on type 'readonly number[]'.
+// admins.push(6)
 
-// data.push("javohir")
-// Tuple type '[string, number]' of length '2' has no element at index '2'.
-// console.log(data[2])
+// Index signature in type 'readonly number[]' only permits reading.
+// admins[0] = 3
 
-console.log(data);
+console.log(admins);
 
-// string | number union type (string | boolean | number va hk)
-let cordinates : [number , string | number] = [98 , 23]
+type Person = {
+  firstName: string;
+  age: number;
+  isMerried: boolean;
+  address: {
+    country: string;
+    town: string;
+    houseNumber: string | number;
+  };
+};
 
-cordinates = [22 , 'east']
+const persons: readonly Person[] = [
+  {
+    firstName: "javohir",
+    age: 22,
+    isMerried: false,
+    address: {
+      country: "uzbekistan",
+      town: "angren",
+      houseNumber: 18,
+    },
+  },
+  {
+    firstName: "Ulug'bek",
+    age: 24,
+    isMerried: false,
+    address: {
+      country: "uzbekistan",
+      town: "angren",
+      houseNumber: 18,
+    },
+  },
+];
 
-// Type 'string' is not assignable to type 'number'.
-// cordinates = ['west' , 'east']
+// Bu objectni persons[0] bilan bir xil type deb qabul qil.
+// as typeof persons[0]
 
-console.log(cordinates)
+//  Index signature in type 'readonly { firstName: string; age: number; isMerried: boolean; address: { country: string; town: string; houseNumber: string | number; }; }[]' only permits reading.
+// persons[0] = { ...persons[0], firstName: "minxo" } as typeof persons[0];
 
+// 1 map yangi massiv yaratdi yangi object emas
+// 2 array ichida objectlar bilan ishlasa mutatsiyadan qochish uchun spread dan foydalanish kerak
+// 3  objectlar reference saqlaydi readonly faqat shu referece manzilni ozgarmasligini taminllaydi
+// referece qiymatni olip objectni ozgartirish mumkin
+const newArr = persons.map((item) => {
+  return {
+    ...item,
+    age: item.age + 1,
+  };
+});
 
-// tuple for  functions 
-const myFunction = () : [string , number | string | boolean] =>{
-    return ["javohir" , 22]
-}
+console.log(newArr, "newArr");
 
-const res = myFunction()
-console.log(res)
+console.log(persons, "old Array");
 
-// console.log(res[0])
-// console.log(res[1])
+const numbers: ReadonlyArray<number | string> = [1, 2, 3, 4, "uch"];
 
-// Tuple type '[string, string | number | boolean]' of length '2' has no element at index '2'.
-// console.log(res[2])
+// numbers.push("salom")
 
-const [firstName , age ] = myFunction()
-// Tuple type '[string, string | number | boolean]' of length '2' has no element at index '2'.
-// const [firstName , age , isMerried] = myFunction()
-console.log(firstName , age)
-
-//  tuple qiymatlarini orgartirsa boladi faqat array uzunligini va har bitta indexdagi ozgaruvchinni  type i qattiy belgilanadi 
-const person : [string , number] = ['doe' , 22]
-
-person[0]= 'john'
-person[1] = 23
-
-console.log(person)
-
-
+console.log(numbers)
