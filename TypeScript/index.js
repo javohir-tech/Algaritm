@@ -1,51 +1,40 @@
 "use strict";
+///////////////////////////// Enums ////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
-// ======================= READONLY ====================
-const admins = [1, 2, 3, 4, 5];
-// Property 'push' does not exist on type 'readonly number[]'.
-// admins.push(6)
-// Index signature in type 'readonly number[]' only permits reading.
-// admins[0] = 3
-console.log(admins);
-const persons = [
-    {
-        firstName: "javohir",
-        age: 22,
-        isMerried: false,
-        address: {
-            country: "uzbekistan",
-            town: "angren",
-            houseNumber: 18,
-        },
-    },
-    {
-        firstName: "Ulug'bek",
-        age: 24,
-        isMerried: false,
-        address: {
-            country: "uzbekistan",
-            town: "angren",
-            houseNumber: 18,
-        },
-    },
-];
-// Bu objectni persons[0] bilan bir xil type deb qabul qil.
-// as typeof persons[0]
-//  Index signature in type 'readonly { firstName: string; age: number; isMerried: boolean; address: { country: string; town: string; houseNumber: string | number; }; }[]' only permits reading.
-// persons[0] = { ...persons[0], firstName: "minxo" } as typeof persons[0];
-// 1 map yangi massiv yaratdi yangi object emas
-// 2 array ichida objectlar bilan ishlasa mutatsiyadan qochish uchun spread dan foydalanish kerak
-// 3  objectlar reference saqlaydi readonly faqat shu referece manzilni ozgarmasligini taminllaydi
-// referece qiymatni olip objectni ozgartirish mumkin
-const newArr = persons.map((item) => {
-    return {
-        ...item,
-        age: item.age + 1,
-    };
-});
-console.log(newArr, "newArr");
-console.log(persons, "old Array");
-const numbers = [1, 2, 3, 4, "uch"];
-// numbers.push("salom")
-console.log(numbers);
+// enum Directions {
+//     Up,
+//     Down,
+//     Left,
+//     Right
+// }
+// console.log(Directions.Up); // Output: 0
+// console.log(Directions.Down); // Output: 1
+// console.log(Directions.Left); // Output: 2
+// console.log(Directions.Right); // Output: 3
+var Directions;
+(function (Directions) {
+    Directions["Up"] = "Up";
+    Directions["Down"] = "Down";
+    Directions["Left"] = "Left";
+    Directions["Right"] = "Right";
+})(Directions || (Directions = {}));
+// const move : Directions = Directions.Up
+// console.log(move)
+const handler = (directions) => {
+    if (directions === Directions.Up) {
+        return "You are moving up!";
+    }
+    else if (directions === Directions.Down) {
+        return "You are moving down!";
+    }
+    else if (directions === Directions.Left) {
+        return "You are moving left!";
+    }
+    else if (directions === Directions.Right) {
+        return "You are moving right!";
+    }
+};
+const movingUp = handler(Directions.Up);
+console.log(movingUp);
+// console.log(Directions.Up)
 //# sourceMappingURL=index.js.map

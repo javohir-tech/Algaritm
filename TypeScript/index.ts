@@ -1,71 +1,44 @@
-// ======================= READONLY ====================
-const admins: readonly number[] = [1, 2, 3, 4, 5];
+///////////////////////////// Enums ////////////////////////////
 
-// Property 'push' does not exist on type 'readonly number[]'.
-// admins.push(6)
+// enum Directions {
+//     Up,
+//     Down,
+//     Left,
+//     Right
+// }
 
-// Index signature in type 'readonly number[]' only permits reading.
-// admins[0] = 3
+// console.log(Directions.Up); // Output: 0
+// console.log(Directions.Down); // Output: 1
+// console.log(Directions.Left); // Output: 2
+// console.log(Directions.Right); // Output: 3
 
-console.log(admins);
+enum Directions {
+  Up = "Up",
+  Down = "Down",
+  Left = "Left",
+  Right = "Right",
+}
 
-type Person = {
-  firstName: string;
-  age: number;
-  isMerried: boolean;
-  address: {
-    country: string;
-    town: string;
-    houseNumber: string | number;
-  };
-};
+// const move : Directions = Directions.Up
 
-const persons: readonly Person[] = [
-  {
-    firstName: "javohir",
-    age: 22,
-    isMerried: false,
-    address: {
-      country: "uzbekistan",
-      town: "angren",
-      houseNumber: 18,
-    },
-  },
-  {
-    firstName: "Ulug'bek",
-    age: 24,
-    isMerried: false,
-    address: {
-      country: "uzbekistan",
-      town: "angren",
-      houseNumber: 18,
-    },
-  },
-];
+// console.log(move)
 
-// Bu objectni persons[0] bilan bir xil type deb qabul qil.
-// as typeof persons[0]
+const handler = (directions : Directions) =>{
+    if(directions === Directions.Up){
+        return "You are moving up!"
+    }else if(directions === Directions.Down){
+        return "You are moving down!"
+    }else if(directions === Directions.Left){
+        return "You are moving left!"
+    }else if(directions === Directions.Right){
+        return "You are moving right!"
+    }
+}   
 
-//  Index signature in type 'readonly { firstName: string; age: number; isMerried: boolean; address: { country: string; town: string; houseNumber: string | number; }; }[]' only permits reading.
-// persons[0] = { ...persons[0], firstName: "minxo" } as typeof persons[0];
+const movingUp= handler(Directions.Up)
 
-// 1 map yangi massiv yaratdi yangi object emas
-// 2 array ichida objectlar bilan ishlasa mutatsiyadan qochish uchun spread dan foydalanish kerak
-// 3  objectlar reference saqlaydi readonly faqat shu referece manzilni ozgarmasligini taminllaydi
-// referece qiymatni olip objectni ozgartirish mumkin
-const newArr = persons.map((item) => {
-  return {
-    ...item,
-    age: item.age + 1,
-  };
-});
+console.log(movingUp)
 
-console.log(newArr, "newArr");
+// console.log(Directions.Up)
 
-console.log(persons, "old Array");
 
-const numbers: ReadonlyArray<number | string> = [1, 2, 3, 4, "uch"];
-
-// numbers.push("salom")
-
-// console.log(numbers)
