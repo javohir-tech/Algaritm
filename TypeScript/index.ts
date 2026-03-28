@@ -1,30 +1,63 @@
-////////////////// literal types ////////////////////
-let status: "success" | "error" | "loading";
+// ======================= Type Aliases ==========================
+import type { Person } from "./index.types";
+// type Person = {
+//   firstName: string;
+//   lastName: string;
+//   age: number;
+// };
 
-status = "success";
+const person1: Person = {
+  firstName: "Javohir",
+  lastName: "Suvonov",
+  age: 21,
+};
 
-console.log(status);
+console.log(person1);
 
-let code: 200 | 201 | 204 | 404 | 500 = 200;
+type greet = (message: string) => string;
 
-code = 404;
+const myFunction: greet = (message) => {
+  return "hello " + message;
+};
 
-console.log(code);
+console.log(myFunction("salom"));
+// Argument of type 'number' is not assignable to parameter of type 'string'.
+// console.log(myFunction(21))
 
-// enum Status {
-//   Success,
-//   Error,
-// }
+type Compony = {
+  position: string;
+  status: string;
+};
 
-type Status = "success" | "error";
+type WorkCompony = Person & Compony;
 
-function myFunction(status: Status): Status {
-  if (status === "success") {
-    return "success";
-  }
+const xodim: WorkCompony = {
+  firstName: "Javohir",
+  lastName: "Suvnov",
+  age: 21,
+  position: "Full Stack developer",
+  status: "strong junior",
+};
 
-  return "error";
-}
+console.log(xodim);
 
-console.log(myFunction("success"));
-console.log(myFunction("error"));
+type User = {
+  fistName: string;
+  lastName: string;
+  age: 21;
+  wife?: User;
+};
+
+const user1: User = {
+  fistName: "Javohir",
+  lastName: "Suvonov",
+  age: 21,
+  wife: {
+    fistName: "kimdir",
+    lastName: "nimadir",
+    age: 21,
+  },
+};
+
+
+console.log(user1)
