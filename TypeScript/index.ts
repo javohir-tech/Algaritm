@@ -1,44 +1,27 @@
-///////////////////////////// Enums ////////////////////////////
+///// union types //////////////////
+let id: string | number = 12;
+id = "swgd-123";
+console.log(id);
 
-// enum Directions {
-//     Up,
-//     Down,
-//     Left,
-//     Right
-// }
-
-// console.log(Directions.Up); // Output: 0
-// console.log(Directions.Down); // Output: 1
-// console.log(Directions.Left); // Output: 2
-// console.log(Directions.Right); // Output: 3
-
-enum Directions {
-  Up = "Up",
-  Down = "Down",
-  Left = "Left",
-  Right = "Right",
+function myFunction(id: number | string):void {
+  console.log(`My id ${id}`);
 }
 
-// const move : Directions = Directions.Up
+myFunction(12);
+myFunction("salom");
 
-// console.log(move)
+function getterFunc(message: string | number): string | number {
+  if (typeof message === "string") {
+    return `hello  ${message}`;
+  } else if (typeof message === "number") {
+    return message;
+  }
+``
+  return "Undefiend type" + message;
+}
 
-const handler = (directions : Directions) =>{
-    if(directions === Directions.Up){
-        return "You are moving up!"
-    }else if(directions === Directions.Down){
-        return "You are moving down!"
-    }else if(directions === Directions.Left){
-        return "You are moving left!"
-    }else if(directions === Directions.Right){
-        return "You are moving right!"
-    }
-}   
+console.log(getterFunc("javohir"))
+console.log(getterFunc(12))
 
-const movingUp= handler(Directions.Up)
-
-console.log(movingUp)
-
-// console.log(Directions.Up)
-
-
+//Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
+// console.log(getterFunc(true))
