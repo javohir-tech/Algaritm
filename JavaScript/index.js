@@ -6,7 +6,7 @@ const obj = {
 }
 
 const fn = obj.greet;
-fn.call(obj)
+fn.apply(obj)
 
 function makeCounter (){
     let count = 0
