@@ -1,27 +1,30 @@
-///// union types //////////////////
-let id: string | number = 12;
-id = "swgd-123";
-console.log(id);
+////////////////// literal types ////////////////////
+let status: "success" | "error" | "loading";
 
-function myFunction(id: number | string):void {
-  console.log(`My id ${id}`);
-}
+status = "success";
 
-myFunction(12);
-myFunction("salom");
+console.log(status);
 
-function getterFunc(message: string | number): string | number {
-  if (typeof message === "string") {
-    return `hello  ${message}`;
-  } else if (typeof message === "number") {
-    return message;
+let code: 200 | 201 | 204 | 404 | 500 = 200;
+
+code = 404;
+
+console.log(code);
+
+// enum Status {
+//   Success,
+//   Error,
+// }
+
+type Status = "success" | "error";
+
+function myFunction(status: Status): Status {
+  if (status === "success") {
+    return "success";
   }
-``
-  return "Undefiend type" + message;
+
+  return "error";
 }
 
-console.log(getterFunc("javohir"))
-console.log(getterFunc(12))
-
-//Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
-// console.log(getterFunc(true))
+console.log(myFunction("success"));
+console.log(myFunction("error"));
