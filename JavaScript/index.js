@@ -1,18 +1,9 @@
-function outer(){
-    let count = 0
-    return function(){
-        return function(){
-            count++
-            return count
-        }
-    }
+////////////////////////////// NEVER /////////////////////////////
+
+function throwError() {
+    throw new Error("heto");
 }
 
+const useFetch = async () => {
 
-const inner = outer()
-
-const increment = inner()
-
-console.log(increment())
-console.log(increment())
-console.log(increment())
+}
