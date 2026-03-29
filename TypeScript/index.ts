@@ -1,63 +1,53 @@
-// ======================= Type Aliases ==========================
-import type { Person } from "./index.types";
-// type Person = {
-//   firstName: string;
-//   lastName: string;
-//   age: number;
-// };
+////////////////// interface ////////////////////
+type seyHello = (name: string) => string;
 
-const person1: Person = {
-  firstName: "Javohir",
-  lastName: "Suvonov",
-  age: 21,
-};
-
-console.log(person1);
-
-type greet = (message: string) => string;
-
-const myFunction: greet = (message) => {
-  return "hello " + message;
-};
-
-console.log(myFunction("salom"));
-// Argument of type 'number' is not assignable to parameter of type 'string'.
-// console.log(myFunction(21))
-
-type Compony = {
-  position: string;
-  status: string;
-};
-
-type WorkCompony = Person & Compony;
-
-const xodim: WorkCompony = {
-  firstName: "Javohir",
-  lastName: "Suvnov",
-  age: 21,
-  position: "Full Stack developer",
-  status: "strong junior",
-};
-
-console.log(xodim);
-
-type User = {
-  fistName: string;
+interface Person {
+  readonly firstName: string;
   lastName: string;
-  age: 21;
-  wife?: User;
-};
+  age: number;
+  cource: 1 | 2 | 3 | 4;
 
-const user1: User = {
-  fistName: "Javohir",
-  lastName: "Suvonov",
-  age: 21,
-  wife: {
-    fistName: "kimdir",
-    lastName: "nimadir",
+  greet: (message: string) => string;
+}
+
+// interface Person {
+//   hoppy: string;
+// }
+
+interface Worker {
+  postion: string;
+  sayHello : seyHello
+}
+
+interface Componyworker extends Person, Worker {
+  expirianse: number;
+  coupuse : "east" | "west"
+}
+
+const persons: Componyworker[] = [
+  {
+    firstName: "Javohir",
+    lastName: "Suvonov",
     age: 21,
+    postion: "full Stack developer",
+    // hoppy: "play  piano",
+    cource: 4,
+    expirianse: 2,
+    coupuse : "east",
+
+    greet: function (message) {
+      return message;
+    },
+
+    sayHello : function(name){
+      return `Hello ${name}`
+    }
   },
-};
+];
 
-
-console.log(user1)
+const person1 = persons[0];
+console.log(person1?.greet("salom"));
+console.log(person1?.sayHello("Javohir"))
+// person1!.firstName = "suvonov"
+console.log(person1?.firstName)
+console.log(persons);
