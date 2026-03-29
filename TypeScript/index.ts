@@ -8,7 +8,9 @@
 
 function greet(text : string , callback : (message : string) => void){
   console.log(text)
-  callback(`logget : ${text}`)
+  let res = callback(`logget : ${text}`)
+  // const qiziq = res.toUpperCase()
+  console.log(res , "natija")
 }
 
 greet("hello" , (message) =>{

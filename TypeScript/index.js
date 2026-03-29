@@ -7,9 +7,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // myFunction("hello")
 function greet(text, callback) {
     console.log(text);
-    callback(`logget : ${text}`);
+    let res = callback(`logget : ${text}`);
+    const qiziq = res.toUpperCase();
+    console.log(qiziq, "natija");
 }
 greet("hello", (message) => {
-    console.log(message);
+    return message;
 });
 //# sourceMappingURL=index.js.map
