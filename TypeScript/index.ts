@@ -5,7 +5,7 @@ interface Person {
   readonly firstName: string;
   lastName: string;
   age: number;
-  cource: 1 | 2 | 3 | 4;
+  cource ?: 1 | 2 | 3 | 4;
 
   greet: (message: string) => string;
 }
@@ -31,7 +31,7 @@ const persons: Componyworker[] = [
     age: 21,
     postion: "full Stack developer",
     // hoppy: "play  piano",
-    cource: 4,
+    // cource: 4,
     expirianse: 2,
     coupuse : "east",
 

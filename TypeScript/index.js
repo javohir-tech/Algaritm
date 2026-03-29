@@ -7,7 +7,7 @@ const persons = [
         age: 21,
         postion: "full Stack developer",
         // hoppy: "play  piano",
-        cource: 4,
+        // cource: 4,
         expirianse: 2,
         coupuse: "east",
         greet: function (message) {
