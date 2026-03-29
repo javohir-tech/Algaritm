@@ -1,26 +1,22 @@
 "use strict";
+////////////////////////////// NEVER /////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
-////// unknown /////////////////
-function myFunction(value) {
-    if (typeof value === "string") {
-        return value.toUpperCase();
-    }
-    else if (typeof value === "number") {
-        return value.toFixed(2);
-    }
-    return "Unkown type";
+function throwError(err) {
+    throw new Error(err);
 }
-console.log(myFunction("salom"));
-console.log(myFunction(23.343515));
-console.log(myFunction(true));
-const person = {
-    name: "Javohir",
-    age: 21,
+const useFetch = async () => {
+    try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/user");
+        // console.log(response)
+        if (response.status !== 200) {
+            throwError("fetch error");
+        }
+        const data = await response.json();
+        console.log(data);
+    }
+    catch (error) {
+        throwError("fetch error");
+    }
 };
-function Greet(obj) {
-    const newObj = obj;
-    console.log(newObj.name);
-    console.log(newObj.age);
-}
-Greet(person);
+useFetch();
 //# sourceMappingURL=index.js.map
