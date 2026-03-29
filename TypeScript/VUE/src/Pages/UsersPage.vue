@@ -7,7 +7,8 @@
         {{ err }}
     </div>
     <div v-for="user in data ?? []" style="border: 1px solid red;" :key="user.id">
-        <UserCard :name="user.name" :username="user.username" :address="user.address" />
+        <UserCard :id="user.id" :name="user.name" :username="user.username" :address="user.address" :phone="user.phone"
+            :website="user.website" :company="user.company" />
     </div>
 </template>
 
