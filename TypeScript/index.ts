@@ -1,22 +1,76 @@
-////////////////////////////// NEVER /////////////////////////////
-///// never infinitiy loop functionlarda va hech nima qaymatdigan funksiyalar uchun ishlatiladi 
+// Asserts
+
+// type assertion
+
+// const message : unknown = "hello world"
+
+// const len : number = (<string>message).length
+// const leng : number = (message as string).length
+
+// const uzunlik : string =  message as string
+// const uzun : string = <string>message
+
+// console.log(uzun.length)
+// console.log(uzunlik.length)
+// console.log(len)
+// console.log(leng)
+
+// Type guards
+
+// class Dog {
+//   wow() {
+//     console.log("wow");
+//   }
+// }
+
+// class Cat {
+//   meow() {
+//     console.log("meow");
+//   }
+// }
+
+// function makeSound(value: Dog | Cat) {
+//   if (value instanceof Dog) {
+//     value.wow();
+//   } else if (value instanceof Cat) {
+//     value.meow();
+//   }
+// }
+
+// makeSound(new Dog());
+// makeSound(new Cat());
+
+// type Car = { speed: number };
+// type Plan = { high: number };
+
+// function print(avtomabil: Car | Plan) {
+//   if("speed" in avtomabil){
+//     console.log(avtomabil.speed)
+//   }else{
+//     console.log(avtomabil.high)
+//   }
+// }
+
+// print({speed : 200})
+// print({high : 300})
+
+// Type Assertion
+
 function throwError(err: string): never {
   throw new Error(err);
 }
 
-const useFetch = async () => {
-  try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/user");
-    // console.log(response)
-    if(response.status !== 200){
-      throwError("fetch error")
-    }
-    const data = await response.json()
-    console.log(data)
-  } catch (error) {
-    throwError("fetch error");
+function isNumber(value: unknown): asserts value is number {
+  if (typeof value !== "number") {
+    throwError("value is not number");
   }
-};
+}
 
+// const a: unknown = "29";
+let a: unknown = 29;
+let b: unknown = 23.3455
 
-useFetch()
+isNumber(a);
+isNumber(b)
+console.log(a + 10);
+console.log(typeof b.toFixed(2))
