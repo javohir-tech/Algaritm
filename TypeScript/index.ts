@@ -71,6 +71,6 @@ let a: unknown = 29;
 let b: unknown = 23.3455
 
 isNumber(a);
-isNumber(b)
+isNumber(b);
 console.log(a + 10);
 console.log(typeof b.toFixed(2))
