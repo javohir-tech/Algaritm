@@ -72,6 +72,17 @@
 // console.log(res3)
 
 
+interface  Shape<T>{
+    radius : T
+}
 
+function myFunction<T>(value : T):Shape<T>{
+    return {radius : value}
+}
+
+const res1 = myFunction<number>(12)
+console.log(res1)
+const res2 = myFunction<string>("45deg")
+console.log(res2)
 
 
