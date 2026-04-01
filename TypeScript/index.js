@@ -1,37 +1,25 @@
 "use strict";
+/////////////// GENERICS FUNCTION ///////////////////
+// function myFunction<T>(val1: T): T {
+//   return val1;
+// }
 Object.defineProperty(exports, "__esModule", { value: true });
-function Myfunction(value) {
-    return value;
+// const res1 = myFunction<number>(2.9873)
+// const res2 = myFunction<string>("hello world")
+// const res3 = myFunction<boolean>(true)
+// console.log(res1.toFixed(2))
+// console.log(res2.toUpperCase())
+// console.log(res3.valueOf())
+function throwError(text) {
+    throw new Error(text);
 }
-console.log(Myfunction(5));
-// const arr: (number | string)[] = [1, 2, 3, 4, 5];
-const arr = [1, 2, 3, 4, 5];
-// const users: (IUser & {isMarried :  boolean})[] = [
-//   {
-//     name: "Javohir",
-//     age: 21,
-//     isMarried : false
-//   },
-// ];
-const users = [
-    {
-        name: "Javohir",
-        age: 21,
-        isMarried: false,
-    },
-];
-console.log(users);
-var Person;
-(function (Person) {
-    Person[Person["ADMIN"] = 0] = "ADMIN";
-    Person[Person["MANAGER"] = 1] = "MANAGER";
-    Person[Person["USER"] = 2] = "USER";
-})(Person || (Person = {}));
-const companyusers = [
-    {
-        position: Person.ADMIN,
-        age: 21,
-    },
-];
-console.log(companyusers);
+function marge(val) {
+    return val[0];
+}
+const res1 = marge([1.234, 2, 3, 4, 5]);
+console.log(res1.toFixed(2));
+const res2 = marge(["bir", "ikki"]);
+console.log(res2.toUpperCase());
+const res3 = marge([{ name: "Javohir", age: 21, isMerried: false }]);
+console.log(res3);
 //# sourceMappingURL=index.js.map
