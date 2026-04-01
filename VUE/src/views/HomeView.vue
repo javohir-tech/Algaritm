@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import useFetch from '@/Composables/useFetch';
+import { onMounted } from 'vue';
+import type { IUser } from '@/Types';
+
+const { loading, data, err, getData } = useFetch<IUser>("https://jsonplaceholder.typicode.com/users")
+
+onMounted(() => {
+  getData()
+})
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <p v-for="user in data" :key="user.id">
+    {{ user.name }}
+  </p>
 </template>
