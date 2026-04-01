@@ -28,7 +28,7 @@
 // }
 
 // const isAdult = myFunction<number>(21);
-// const isAdult2 = myFunction<string>("javohir");
+// const isAdult2 = myFunction<string>("javohir");cls
 // console.log(isAdult);
 // console.log(isAdult2);
 
