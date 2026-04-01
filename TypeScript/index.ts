@@ -83,6 +83,6 @@ function myFunction<T>(value : T):Shape<T>{
 const res1 = myFunction<number>(12)
 console.log(res1)
 const res2 = myFunction<string>("45deg")
-console.log(res2)
+console.log(res2) 
 
 
