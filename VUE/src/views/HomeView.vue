@@ -6,7 +6,7 @@ import UserCard from '@/components/UserCard.vue';
 
 const { loading, data, err, getData } = useFetch<IUser>("https://jsonplaceholder.typicode.com/users")
 
-const handleDelete = (id: number) :void => {
+const handleDelete = (id: number): void => {
   data.value = data.value.filter(c => c.id !== id)
 }
 
@@ -22,6 +22,6 @@ onMounted(() => {
   <div v-if="!loading && err">
     <p>{{ err }}</p>
   </div>
-  <UserCard v-if="!loading" v-for="user in data" :key="user.id" :id="user.id" :name="user.name"
+  <UserCard v-if="!loading" v-for="user in data" :key="user.id" :id="user.id" :name="user.name" :address="user.address"
     @delete="handleDelete" />
 </template>
