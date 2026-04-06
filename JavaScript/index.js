@@ -1,9 +1,7 @@
-////////////////////////////// NEVER /////////////////////////////
+let a = 0
 
-function throwError() {
-    throw new Error("heto");
+while (a !== 1000000000){
+    a++
 }
 
-const useFetch = async () => {
-
-}
+console.log(a)
