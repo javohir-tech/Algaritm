@@ -1,6 +1,8 @@
 <template>
-    <p>{{ props.name }}</p>
-    <button @click="handleDelete(props.id)">Delete</button>
+    <NuxtLink :to="`/users/${props.id}`">
+        <p>{{ props.name }}</p>
+        <button @click="handleDelete(props.id)">Delete</button>
+    </NuxtLink>
 </template>
 
 <script setup lang="ts">
