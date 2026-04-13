@@ -5,3 +5,9 @@ ul.addEventListener("click", function(event) {
         console.log("Clicekd :" , event.target.textContent )
     }
 });
+
+// var a = "i am in global"
+// console.log(window.a)
+
+// let b = "i am not in global"
+// console.log(window.b)
