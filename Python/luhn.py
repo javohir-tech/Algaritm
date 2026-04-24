@@ -1,15 +1,15 @@
 def luhn(card_number):
     digits = [int(d) for d in card_number.replace(" ", "")]
-
+    digits.reverse()
     total = 0
 
-    # print(digits)
     for i, digit in enumerate(digits):
-        if i % 2 == 0:
-            doupled = digit * 2
-            total += doupled - 9 if doupled else doupled
+        if i % 2 == 1: 
+            doubled = digit * 2
+            total += doubled - 9 if doubled > 9 else doubled
         else:
-            total += doupled
+            total += digit 
+
     return (10 - (total % 10)) % 10
 
 
