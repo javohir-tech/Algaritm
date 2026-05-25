@@ -1,4 +1,5 @@
 cars = ["audi", "mers", "bmw", "bugatti", "porsche"]
 
-tartiblangan = cars.sort(reverse=True)
+tartiblangan = sorted(cars , reverse=True)
 print(cars)
+print(tartiblangan)
