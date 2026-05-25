@@ -1,5 +1,5 @@
 cars = ["audi", "mers", "bmw", "bugatti", "porsche"]
 
-tartiblangan = sorted(cars , reverse=True)
-print(cars)
-print(tartiblangan)
+# numbers = range(0, 10)
+# number_list = list(numbers)
+# print(number_list)
