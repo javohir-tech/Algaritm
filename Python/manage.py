@@ -1,6 +1,13 @@
-mevalar = {"apple": "olma", "cherry": "olcha", "banana": "banan"}
+car = {"marka": "porsche", "model": "911" }
+print(car["marka"])
 
-# print(mevalar['apricot'])
-# meva = mevalar.get("apricot" , "bunday meva mavjud emas")
-meva = mevalar.get("apricot" ) # None
-print(meva)
+car['color'] = "red"
+
+del car['model']
+
+print(car)
+
+# print(car['year'])
+
+# errorni oldini olish get()
+print(car.get("year"))
