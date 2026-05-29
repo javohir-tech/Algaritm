@@ -23,5 +23,10 @@ bozorlik = ["olma", "nok"]
 #     print(mahsulot)
 
 
+for mahsulot in mahsulotlar:
+    if mahsulot in bozorlik:
+        print(f"{mahsulot} narxi {mahsulotlar[mahsulot]} so'm")
+        
+
 
 
