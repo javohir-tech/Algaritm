@@ -1,13 +1,13 @@
-car = {"marka": "porsche", "model": "911" }
-print(car["marka"])
+# lugat bilan ishlash
 
-car['color'] = "red"
+telefonlaar = {
+    "ali" : "mi 9" , 
+    "vali" : "iphone x",    
+    "umar" : "samsung 21", 
+    "sabi"  : "samsung 32"
+}
 
-del car['model']
-
-print(car)
-
-# print(car['year'])
-
-# errorni oldini olish get()
-print(car.get("year"))
+for key , value in telefonlaar.items():
+    print(f"Kalit : {key}")
+    print(f"Qiymat : {value}")
+    
