@@ -1,32 +1,28 @@
-# lugat bilan ishlash
-
-telefonlaar = {
-    "ali": "mi 9",
-    "vali": "iphone x",
-    "umar": "samsung 21",
-    "sabi": "samsung 32",
+car0 = {
+    "color": "red",
+    "model": "malibu",
+    "year": 2014,
+    "km": 21000,
+    "price": None,
 }
 
-# for key, value in telefonlaar.items():
-    # print(f"Kalit : {key}")
-    # print(f"Qiymat : {value}")
+car1 = {
+    "color": "black",
+    "model": "nexia 2",
+    "year": 2011,
+    "km": 230000,
+    "price": 5300,
+}
 
-mahsulotlar = {"olma": 10000, "nok": 25000, "cola": 12000, "snikers": 9000}
+car2 = {
+    "color": "white",
+    "model": "tracker",
+    "year": 2018,
+    "km": 30000,
+    "price": 18000,
+}
 
-bozorlik = ["olma", "nok"]
+cars = [car0 , car1 , car2]
 
-# for mahsulot in mahsulotlar.keys():
-#     print(mahsulot)
-    
-# key() shart emas kalitlarni olisuh uchun    
-# for mahsulot in mahsulotlar:
-#     print(mahsulot)
-
-
-for mahsulot in mahsulotlar:
-    if mahsulot in bozorlik:
-        print(f"{mahsulot} narxi {mahsulotlar[mahsulot]} so'm")
-        
-
-
+print(cars)
 
