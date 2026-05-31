@@ -1,32 +1,12 @@
-## While sikle 
+talabalar = ["javohir", "jasur", "abbos", "jahon"]
+baholangan = {}
 
-savol = "istalgan son kiriting . kv isini hisoblap beramiz . tugatissh uchun exxitni bosing"
-
-# qiymat = ''
-# while qiymat != "exit" :
-#     qiymat = input(f"{savol} son kiriting >>> ")
-#     if qiymat != "exit":
-#         print(float(qiymat)**2)
+while talabalar :
+    talaba = talabalar.pop()
+    baho =  input(f"{talaba.title()} ga baho qoying >>>")
+    baholangan[talaba] = baho
+    print(f"{talaba.title()} baholandi")
     
-# print("dastur tugadi !!!")
-
-#  flag
-
-# isFlag = True
-
-# while isFlag:
-#     son = input(f"{savol} son kiriting >>> ")
-#     if son.strip().lower() == "exit":
-#         isFlag =  False
-#     else :
-#         print(float(son)**2)
-# print("dastur tugadi !!!")
-
-
-while True :
-    qiymat = input(f"{savol} son kiriting >>> ")
-    if qiymat.strip().lower() == "exit":
-        break
-    else :
-        print(float(qiymat)**2)
-print("dastur tugadi")
+print("talabalar to'liq baholandi")
+print(baholangan)
+print(talabalar)
