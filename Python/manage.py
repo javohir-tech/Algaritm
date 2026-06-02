@@ -1,12 +1,4 @@
-talabalar = ["javohir", "jasur", "abbos", "jahon"]
-baholangan = {}
+def myFunction(ism : str)->str:
+    return ism
 
-while talabalar :
-    talaba = talabalar.pop()
-    baho =  input(f"{talaba.title()} ga baho qoying >>>")
-    baholangan[talaba] = baho
-    print(f"{talaba.title()} baholandi")
-    
-print("talabalar to'liq baholandi")
-print(baholangan)
-print(talabalar)
+print(myFunction("salom"))
