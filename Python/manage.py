@@ -1,17 +1,6 @@
-# def summa(*sonlar):
-#     yigindi = 0
-#     for son in sonlar:
-#         yigindi += son
-#     return yigindi
+def avto_info(kompaniya :str , model:str , **kwargs):
+    kwargs['kompaniya'] = kompaniya
+    kwargs['model'] = model
+    return kwargs
 
-
-# print(summa(1, 2, 3, 5))
-
-
-# error sabab funksiyaga uzatilgan argumantlar tuple bolip  ishlaydi 
-def myFunction(*sonlar):
-    sonlar.push(2)
-    return sonlar
-
-
-print(myFunction(1, 2, 3, 4))
+print(avto_info("porche" , "911" , year = 1988 , color = "red" , km = 1234))
