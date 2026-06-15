@@ -8,7 +8,7 @@ class Talaba:
         return f"{self.name} {self.surname} {self.year}"
 
 
-talaba1 = Talaba("javohir", "suvonov", 2004)
+talaba1 = Talaba("ulugbek", "suvonov", 2004)
 
 print(talaba1.name)
 print(talaba1)

@@ -16,7 +16,7 @@ function addDigits(num) {
     return sum
 }
 
-const num = 382341
+const num = 38234
 console.log(addDigits(num))
 
 // console.log(387%100)
