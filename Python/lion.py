@@ -47,9 +47,7 @@ while True:
     new_head = (head_x + dx, head_y + dy)
 
     if (
-        new_head[0] < 0
-        or new_head[0] >= width
-        or new_head[1] < 0
+      
         or new_head[1] >= height
         or new_head in snake
     ):
