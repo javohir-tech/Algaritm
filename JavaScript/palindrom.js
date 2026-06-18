@@ -1,1 +1,7 @@
-console.log(isNaN(12/0))
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var isStrictlyPalindromic = function(n) {
+    return false
+};
