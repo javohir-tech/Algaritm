@@ -13,6 +13,7 @@ function countOdds(low, high) {
         }
     }
 
+    
     return  res
 }
 
