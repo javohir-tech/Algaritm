@@ -17,5 +17,5 @@ function countOdds(low, high) {
     return  res
 }
 
-let low = 3, high = 7
+let low = 3, high = 98
 console.log(countOdds(low , high))
