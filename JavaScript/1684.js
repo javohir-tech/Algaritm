@@ -5,23 +5,25 @@
 */
 
 function countConsistentStrings(allowed, words) {
-    let sum = 0
-    let arr_allowed = allowed.split("")
-    for (let i = 0; i < words.length; i++) {
-        let word_arr = words[i].split("")
-        let she_said_yes = true
-        for (let j = 0; j < word_arr.length; j++) {
-            if (arr_allowed.findIndex(a => a === word_arr[j]) === -1) {
-                she_said_yes = false
+    let set = new Set(allowed)
+
+    let count = 0;
+
+    for (const word of words) {
+
+        let ok = true
+
+        for (const ch of word) {
+            if(!set.has(ch)){
+                ok = false
+                break
             }
         }
 
-        if (she_said_yes) {
-            sum++
-        }
-
+        if (ok) count++
     }
-    return sum
+
+    return count
 }
 
 
