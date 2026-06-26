@@ -5,7 +5,7 @@
 */
 
 function countConsistentStrings(allowed, words) {
-    let set = new Set(allowed)
+    // let set = new Set(allowed)
 
     let count = 0;
 
@@ -14,7 +14,7 @@ function countConsistentStrings(allowed, words) {
         let ok = true
 
         for (const ch of word) {
-            if(!set.has(ch)){
+            if(!allowed.includes(ch)){
                 ok = false
                 break
             }
