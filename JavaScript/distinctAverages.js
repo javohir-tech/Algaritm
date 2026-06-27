@@ -3,17 +3,19 @@
  * @return {number}
  */
 var distinctAverages = function (nums) {
-    const arr = []
+    const new_set = new Set()
     while (nums.length !== 0) {
-        console.log(nums)
         const max_value = Math.max(...nums)
         const min_value = Math.min(...nums)
         let distinc = (max_value + min_value) / 2
-        arr.push(distinc)
+        new_set.add(distinc)
         const max_index = nums.findIndex(n => n === max_value)
-        const min_index = nums.findIndex(n => n === min_index)
+        nums.splice(max_index , 1)
+        const min_index = nums.findIndex(n => n === min_value)
+        nums.splice(min_index , 1)
+        
     }
-    // console.log(arr)
+    return [...new_set.values()].length
 };
 
 const nums = [4, 1, 4, 0, 3, 5]
