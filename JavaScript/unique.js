@@ -28,5 +28,5 @@ var uniqueOccurrences = function (arr) {
 };
 
 
-const arr = [1, 2]
+const arr = [1, 2 , 4]
 console.log(uniqueOccurrences(arr))
