@@ -3,15 +3,17 @@
  * @return {number}
  */
 var numIdenticalPairs = function (nums) {
-    let sum =0
+    const obj = {}
+
     for (let i = 0; i < nums.length; i++) {
-        for (let j = i + 1; j < nums.length; j++) {
-            if(nums[i]===nums[j]){
-                sum ++
-            }
+        if (!nums[i] in obj) {
+            obj[nums[i]] = 1
+        }else{
+            obj[nums[i]]++
         }
     }
-    return sum
+
+    console.log(obj)
 };
 
 
