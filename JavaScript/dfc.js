@@ -14,5 +14,5 @@ function inorderTraversal(root) {
     return result;
 }
 
-const root = [1 , null , 2, 3]
+const root = [1 , null , 2, 3 , 4]
 console.log(inorderTraversal(root))
