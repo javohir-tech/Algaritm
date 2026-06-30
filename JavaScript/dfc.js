@@ -12,6 +12,7 @@ function inorderTraversal(root) {
     dfs(root);
 
     return result;
+    
 }
 
 const root = [1 , null , 2, 3 , 4]
