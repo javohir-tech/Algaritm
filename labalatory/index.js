@@ -1,21 +1,18 @@
-// const ul = document.querySelector("ul")
+const promise = new Promise((resolve, reject) => {
+    setTimeout(()=>{
+        const success = true
 
-// ul.addEventListener("click", function(event) {
-//     if (event.target.tagName === "LI") {
-//         console.log("Clicekd :" , event.target.textContent )
-//     }
-// });
+        if(success){
+            resolve("yaxshi yakunlandi !!!")
+        }else{
+            reject("xatolikga uchradi")
+        }
 
-// var a = "i am in global"
-// console.log(window.a)
+    })
+})
 
-// let b = "i am not in global"
-// console.log(window.b)
-
-console.log(Number(123))
-console.log(Number("123"))
-console.log(Number(true))
-console.log(Number(false))
-console.log(Number(null))
-console.log(Number(undefined))
-console.log(Number([1 ,  3]))
+promise
+.then((res)=>{
+    console.log(res)
+})
+.catch(err=>console.log(err))
