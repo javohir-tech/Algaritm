@@ -24,23 +24,43 @@
 // console.log(salom())
 // salom().then(res=>console.log(res))
 
-const getUsers = async () => {
-    try {
-        const baseURL = "https://jsonplaceholder.typicode.com"
-        const [users, posts] = await Promise.all([
-            fetch(`${baseURL}/users`)
-            .then(res =>{
-                if(!res.ok){
-                    throw new Error(`HTTP xatolik : ${res.status}`)
-                }
-                return res.json()
-            }),
-            fetch(`${baseURL}/posts?_limit=10`).then(res => res.json())
-        ])
-        console.log(posts, users)
-    } catch (error) {
-        console.log(error)
-    }
-}
+// const getUsers = async () => {
+//     try {
+//         const baseURL = "https://jsonplaceholder.typicode.com"
+//         const [users, posts] = await Promise.all([
+//             fetch(`${baseURL}/users`)
+//             .then(res =>{
+//                 if(!res.ok){
+//                     throw new Error(`HTTP xatolik : ${res.status}`)
+//                 }
+//                 return res.json()
+//             }),
+//             fetch(`${baseURL}/posts?_limit=10`).then(res => res.json())
+//         ])
+//         console.log(posts, users)
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
-getUsers()
+// getUsers()
+
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        const success = true
+        if (success) {
+            resolve("ok")
+        }
+    }, 1000)
+})
+
+promise
+.then(res=>{
+    return new Promise((resolve , reject)=>{
+        setTimeout(()=>{
+            resolve("tugadi")
+            console.log()
+        })
+    })
+})
+.then(res=>console.log(res))
