@@ -10,7 +10,7 @@ var arithmeticTriplets = function (nums, diff) {
             if (nums[j] - nums[i] === diff) {
                 for (let k = j + 1; k < nums.length; k++) {
                     if (nums[k] - nums[j] === diff) {
-                        res.push([i , j , k])
+                        res.push([i , j , k] )
                     }
                 }
             }
