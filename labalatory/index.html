@@ -5,15 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
 <body>
-    <ul class="">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-    </ul>
-    <script src="index.js"></script>
+    <div id="app">
+        <h1>{{message}}</h1>
+        <p>ikki barobar {{doupled}}</p>
+        <button @click="increment">Bosildi {{count}}</button>
+        <input type="text" v-model="name" placeholder="Ismingizni kiritng">
+        <p>Salom {{name}}</p>
+    </div>
 </body>
+
+<script>
+    const { createApp, ref, reactive, computed, watch, OnMounted } = Vue
+
+    createApp({
+        setup() {
+            const count = ref(0)
+            const name = ref("")
+            const message = ref("Composition API CDN orqali!")
+
+            const doupled = computed(() => count.value * 2)
+
+            const increment = () => count.value++
+
+            watch(count, (oldCount, newCount) => {
+                console.log(`eski qiymat ${oldCount}  yangi qiymat ${newCount}`)
+            })
+
+            onMounted(() => {
+                console.log("Komponent DOM ga qoshildi")
+            })
+
+            return {
+                count, 
+                name , 
+                message, 
+                doupled, 
+                increment
+            }
+        }
+    }).mount('#app')
+</script>
 
 </html>
