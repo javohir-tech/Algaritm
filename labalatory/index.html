@@ -12,42 +12,42 @@
     <div id="app">
         <h1>{{message}}</h1>
         <p>ikki barobar {{doupled}}</p>
-        <button @click="increment">Bosildi {{count}}</button>
+        <button @click="increment">Bosildi {{count}}</button><br>
         <input type="text" v-model="name" placeholder="Ismingizni kiritng">
         <p>Salom {{name}}</p>
     </div>
+    <script>
+        const { createApp, ref, reactive, computed, watch, onMounted } = Vue
+
+        createApp({
+            setup() {
+                const count = ref(0)
+                const name = ref("")
+                const message = ref("Composition API CDN orqali!")
+
+                const doupled = computed(() => count.value * 2)
+
+                const increment = () => count.value++
+
+                watch(count, (newCount, oldCount) => {
+                    console.log(`eski qiymat ${oldCount}  yangi qiymat ${newCount}`)
+                })
+
+                onMounted(() => {
+                    console.log("Komponent DOM ga qoshildi")
+                })
+
+                return {
+                    count,
+                    name,
+                    message,
+                    doupled,
+                    increment
+                }
+            }
+        }).mount('#app')
+    </script>
 </body>
 
-<script>
-    const { createApp, ref, reactive, computed, watch, OnMounted } = Vue
-
-    createApp({
-        setup() {
-            const count = ref(0)
-            const name = ref("")
-            const message = ref("Composition API CDN orqali!")
-
-            const doupled = computed(() => count.value * 2)
-
-            const increment = () => count.value++
-
-            watch(count, (oldCount, newCount) => {
-                console.log(`eski qiymat ${oldCount}  yangi qiymat ${newCount}`)
-            })
-
-            onMounted(() => {
-                console.log("Komponent DOM ga qoshildi")
-            })
-
-            return {
-                count, 
-                name , 
-                message, 
-                doupled, 
-                increment
-            }
-        }
-    }).mount('#app')
-</script>
 
 </html>
