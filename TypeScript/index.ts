@@ -1,6 +1,25 @@
-const num: number = 12;
-// const number: string = "2000";
-const number = 2000
+function chechAdult(age: number): boolean {
+  if (age >= 18) {
+    return true;
+  }
 
-const sum:number = num + number;
-console.log(sum)
+  return false;
+}
+
+console.log(chechAdult(22));
+
+const person = {
+  firstName: "Javohir",
+  lastName: "Suvonov",
+  age: 22,
+  skills: {
+    languages: "javascript",
+  },
+};
+
+const getName = (data: { firstName: string; lastName: string }): string => {
+  return `${data.firstName}  ${data.lastName}`;
+};
+
+const person1 = getName(person);
+console.log(person1)

@@ -1,8 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const num = 12;
-// const number: string = "2000";
-const number = 2000;
-const sum = num + number;
-console.log(sum);
+function chechAdult(age) {
+    if (age >= 18) {
+        return true;
+    }
+    return false;
+}
+console.log(chechAdult(22));
+const person = {
+    firstName: "Javohir",
+    lastName: "Suvonov",
+    age: 22,
+    skills: {
+        languages: "javascript",
+    },
+};
+const getName = (data) => {
+    return `${data.firstName}  ${data.lastName}`;
+};
+const person1 = getName(person);
+console.log(person1);
 //# sourceMappingURL=index.js.map
