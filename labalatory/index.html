@@ -5,49 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
 <body>
-    <div id="app">
-        <h1>{{message}}</h1>
-        <p>ikki barobar {{doupled}}</p>
-        <button @click="increment">Bosildi {{count}}</button><br>
-        <input type="text" v-model="name" placeholder="Ismingizni kiritng">
-        <p>Salom {{name}}</p>
-    </div>
+    <button id="btn">click me</button>
     <script>
-        const { createApp, ref, reactive, computed, watch, onMounted } = Vue
+        const btn = document.getElementById('btn')
+        const bigArray = [1, 2, 3, 4, 5] 
+        btn.addEventListener("click", () => {
 
-        createApp({
-            setup() {
-                const count = ref(0)
-                const name = ref("")
-                const message = ref("Composition API CDN orqali!")
+            const worker = new Worker("heavy-task.js")
+            worker.postMessage({data: bigArray})
+            worker.onmessage = (e) => console.log("natija" , e.data)
 
-                const doupled = computed(() => count.value * 2)
-
-                const increment = () => count.value++
-
-                watch(count, (newCount, oldCount) => {
-                    console.log(`eski qiymat ${oldCount}  yangi qiymat ${newCount}`)
-                })
-
-                onMounted(() => {
-                    console.log("Komponent DOM ga qoshildi")
-                })
-
-                return {
-                    count,
-                    name,
-                    message,
-                    doupled,
-                    increment
-                }
-            }
-        }).mount('#app')
+            
+            console.log("finished")
+        })
     </script>
 </body>
-
 
 </html>
