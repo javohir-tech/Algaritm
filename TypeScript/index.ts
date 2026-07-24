@@ -1,25 +1,10 @@
-function chechAdult(age: number): boolean {
-  if (age >= 18) {
-    return true;
-  }
+const person: [string, number] = ["Javohir", 22];
 
-  return false;
-}
+console.log(person[0])
+console.log(person[1])
+// console.log(person[3])
 
-console.log(chechAdult(22));
-
-const person = {
-  firstName: "Javohir",
-  lastName: "Suvonov",
-  age: 22,
-  skills: {
-    languages: "javascript",
-  },
-};
-
-const getName = (data: { firstName: string; lastName: string }): string => {
-  return `${data.firstName}  ${data.lastName}`;
-};
-
-const person1 = getName(person);
-console.log(person1)
+person.push("Suvonov")
+console.log(person) // [ 'Javohir', 22, 'Suvonov' ]
+console.log(person.length) // 3
+// console.log(person[2])
