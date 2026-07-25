@@ -2,7 +2,11 @@ enum Directions {
   UP = "Up",
   Down = "Down",
   Left = "Left",
-  Right = "Rigth",
+  Right = "Rigth",   
+
+
+
+  
 }
 
 // console.log(Directions.UP);
