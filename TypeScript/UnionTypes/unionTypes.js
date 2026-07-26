@@ -25,6 +25,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // }
 // handleError({message : "bu errorda kelgan message"})
 // handleError({error : "bu errorda kelgan error"})
-const data = ["salom", 1, "dunyo", 2];
-console.log(data);
+// const data: (string | number)[] = ["salom", 1, "dunyo", 2];
+// console.log(data)   
 //# sourceMappingURL=unionTypes.js.map
