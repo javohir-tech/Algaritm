@@ -5,21 +5,23 @@
 // statusMassage = "error";
 // // statusMassage = 'errorr'
 
-enum Status {
-  Success,
-  Loading,
-  Error,
-}
+// enum Status {
+//   Success,
+//   Loading,
+//   Error,
+// }
+
+type Status = "success" | "error";
 
 function getStatus(status: Status): "success" | "error" {
-  if (status === Status.Success) {
-    return "success"
-  }else if(status === Status.Error){
-    return "error"
+  if (status === "success") {
+    return "success";
+  } else if (status === "error") {
+    return "error";
   }
 
-  return "error"
+  return "error";
 }
 
-console.log(getStatus(Status.Error))
-console.log(getStatus(Status.Success))
+console.log(getStatus("success"));
+console.log(getStatus("error"));
