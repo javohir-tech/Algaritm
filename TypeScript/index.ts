@@ -1,34 +1,25 @@
-enum Directions {
-  UP = "Up",
-  Down = "Down",
-  Left = "Left",
-  Right = "Rigth",   
-
-
-
-  
+interface IUser {
+  name: string;
+  role: "admin" | "student";
+  adminSecretCode?: string;
 }
 
-// console.log(Directions.UP);
-// console.log(Directions.Down);
-// console.log(Directions.Left);
-// console.log(Directions.Right);
+interface IAdmin {
+  name : string , 
+  role : "admin" , 
+  adminSecretCode?: string;
+}
 
-// const up: Directions = Directions.UP;
-// console.log(up)
+function IsAdmin(
+  user: IUser,
+): user is IUser & {role : "admin" , adminSecretCode : string} {
+  return user.role === "admin";
+}
 
-function getInfo(direction: Directions): string {
-  if (direction === Directions.UP) {
-    return Directions.UP;
-  } else if (direction === Directions.Down) {
-    return Directions.Down;
-  } else if (direction === Directions.Left) {
-    return Directions.Left;
+function greet(user: IUser) {
+  if (IsAdmin(user)) {
+    console.log(user.adminSecretCode.toUpperCase());
   }
-
-  return Directions.Right;
 }
 
-const res = getInfo(Directions.Down)
-
-console.log(res)
+greet({name :"javohir" , role : "admin" , adminSecretCode : "23www"})
