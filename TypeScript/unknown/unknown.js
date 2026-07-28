@@ -15,12 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // let result: unknown = "salom";
 // let res: number = result as number;
 // console.log(res)
-let person1 = {
-    firstName: "Javohir",
-    age: 22,
-};
-if (typeof person1 === "object") {
-    const obj = person1;
-    console.log(obj.name);
-}
+// let person1: unknown = {
+//   firstName: "Javohir",
+//   age: 22,
+// };
+// interface Person {
+//   name: string; // firstName
+//   age: number;
+// }
+// if (typeof person1 === "object") {
+//     const obj = person1 as Person
+//     console.log(obj.name)
+// }
 //# sourceMappingURL=unknown.js.map
