@@ -1,27 +1,18 @@
-class Car {
-  name: string;
-  owners: string[];
+class Employee {
+  private _salary!: number;
 
-  constructor(name: string) {
-    this.name = name;
-    this.owners = [];
+  set salary(sum: number) {
+    this._salary = sum * 100;
   }
 
-  setOwners(owner: string): void;
-  setOwners(owners: string[]): void;
-  setOwners(ownerOrOwners: string | string[]) {
-    if (typeof ownerOrOwners === "string") {
-      this.owners.push(ownerOrOwners);
-    } else if (typeof ownerOrOwners === "object") {
-      this.owners = this.owners.concat(ownerOrOwners);
-    }
+  get salary(): number {
+    return this._salary;
   }
 }
 
-const car1 = new Car("Ferrari");
-console.log(car1);
-car1.setOwners("ali");
 
-console.log(car1);
-car1.setOwners(["vali", "g'ani"]);
-console.log(car1)
+const employee1 = new Employee()
+
+employee1.salary = 10
+let salary = employee1.salary
+console.log(salary)
