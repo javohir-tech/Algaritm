@@ -14,6 +14,15 @@ class Animal {
         console.log(`${this.name} va ${this.id}`);
     }
 }
+class Life {
+    high;
+    constructor(balandlik) {
+        this.high = balandlik;
+    }
+    info() {
+        console.log(`this animal high - ${this.high}`);
+    }
+}
 class Cat extends Animal {
     constructor(name) {
         const id = Math.random() * 10;
