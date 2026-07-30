@@ -11,8 +11,20 @@ class Animal {
     console.log(`${this.name} make a sound`);
   }
 
-  showInfo(){
-    console.log(`${this.name} va ${this.id}`)
+  showInfo() {
+    console.log(`${this.name} va ${this.id}`);
+  }
+}
+
+class Life {
+  high: number;
+
+  constructor(balandlik: number) {
+    this.high = balandlik;
+  }
+
+  info() {
+    console.log(`this animal high - ${this.high}`)
   }
 }
 
@@ -29,4 +41,4 @@ class Cat extends Animal {
 
 const cat1 = new Cat("Kitty");
 
-cat1.showInfo()
+cat1.showInfo();
