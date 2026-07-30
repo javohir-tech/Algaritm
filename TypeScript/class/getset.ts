@@ -10,9 +10,8 @@ class Employee {
   }
 }
 
+const employee1 = new Employee();
 
-const employee1 = new Employee()
-
-employee1.salary = 10
-let salary = employee1.salary
-console.log(salary)
+employee1.salary = 10;
+let salary = employee1.salary;
+console.log(salary);
