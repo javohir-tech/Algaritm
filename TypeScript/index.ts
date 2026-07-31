@@ -1,157 +1,98 @@
-// task 11
-abstract class Shape {
-  abstract getArea(): number;
-  abstract getPerimeter(): number;
-
-  describe(): void {
-    console.log(`Area: ${this.getArea()}, Perimeter: ${this.getPerimeter()}`);
-  }
+enum BookStatus {
+  Available,
+  Borrowed,
+  Lost,
 }
 
-class Circle extends Shape {
-  radius: number;
+abstract class LibraryItem {
+  id: number;
+  title: string;
 
-  constructor(radius: number) {
-    super();
-    this.radius = radius;
+  constructor(id: number, title: string) {
+    this.id = id;
+    this.title = title;
   }
 
-  getArea(): number {
-    return 3.14 * this.radius ** 2;
-  }
-
-  getPerimeter(): number {
-    return 2 * 3.14 * this.radius;
-  }
+  abstract getInfo(): string;
 }
 
-class Rectangle extends Shape {
-  heigth: number;
-  width: number;
-
-  constructor(heigth: number, width: number) {
-    super();
-    this.heigth = heigth;
-    this.width = width;
-  }
-
-  getArea(): number {
-    return this.heigth * this.width;
-  }
-
-  getPerimeter(): number {
-    return (this.heigth + this.width) * 2;
-  }
+interface Borrowable {
+  borrow(): void;
+  returnItem(): void;
 }
 
-//  task 12
-// interface Movable {
-//   position: { x: number; y: number };
-//   move(x: number, y: number): void;
-// }
+class Book extends LibraryItem implements Borrowable {
+  author: string;
+  status: BookStatus;
 
-// class Car implements Movable {
-//   position: { x: number; y: number };
-
-//   constructor(position: { x: number; y: number }) {
-//     this.position = position;
-//   }
-
-//   move(x: number, y: number): void {
-//     this.position = { x: x, y: y };
-//     console.log(this.position);
-//   }
-// }
-
-// task 13
-class BankAccount {
-  private _balance: number;
-
-  constructor(initialBalance: number) {
-    this._balance = initialBalance;
+  constructor(id: number, title: string, author: string) {
+    super(id, title);
+    this.author = author;
+    this.status = BookStatus.Available;
   }
 
-  // get balance() qo'shing
-  get balance(): number {
-    return this._balance;
-  }
-
-  // set balance() qo'shing — manfiy qiymat kiritilsa xato tashlasin
-  set balance(sum: number) {
-    if (sum < 0) {
-      throw new Error("manfiy qiymat kirita olmaysiz");
+  borrow(): void {
+    if (this.status !== BookStatus.Borrowed) {
+      this.status = BookStatus.Borrowed;
+      console.log("Book changed to borrow");
     } else {
-      this._balance = sum;
+      console.log("Bu kitob allaqachon borrowda ");
     }
   }
 
-  protected logTransaction(amount: number): void {
-    console.log(`Transaction: ${amount}`);
-  }
-
-  // nima uchun kerak ozi funksiya
-  deposit(amount: number): void {
-    if (amount < 0) {
-      throw new Error("manfiy qiymat kirata olmaysiz!!!");
+  returnItem(): void {
+    if (this.status !== BookStatus.Available) {
+      this.status = BookStatus.Available;
+      console.log("kitob qaytarildi");
     } else {
-      this._balance += amount;
+      console.log("bu kitob allaqachon bizda mavjud");
     }
-    console.log(`${this.balance} sizning depostingiz`);
+  }
+
+  getInfo(): string {
+    return `${this.author} ning ${this.title} kitobi`;
   }
 }
 
-const my_bank_account = new BankAccount(1000);
-
-my_bank_account.balance = 2000;
-my_bank_account.deposit(3000);
-console.log(my_bank_account.balance);
-
-// Task 14
-class Counter {
-  static count: number = 0;
+class Library {
+  private items: Book[] = [];
+  static totalLibraries: number = 0;
 
   constructor() {
-    Counter.increment();
+    Library.totalLibraries++;
   }
 
-  static increment() {
-    this.count++;
+  addBook(book: Book): void {
+    if (book.status === BookStatus.Available) {
+      this.items.push(book);
+      console.log(`${book.title} qo'shildi`);
+    } else {
+      console.log(
+        "yoqolgan yoki qarzga berilgan kitoblarni kutubxonalarga qo'sha olmaymiz \n",
+      );
+      console.log("kitobni qaytip olip kutubxonaga qo'shishingiz mumkin \n");
+    }
   }
 
-  static getCount(): number {
-    return this.count;
-  }
-}
-
-const c = new Counter();
-const d = new Counter();
-console.log(Counter.getCount());
-
-// task 15
-class Engine {
-  start(): void {
-    console.log("start");
+  findBook(id: number): Book | undefined {
+    const resultBook = this.items.find((b) => b.id === id);
+    return resultBook;
   }
 
-  stop(): void {
-    console.log("stop");
+  get bookCount(): number {
+    return this.items.length;
   }
 }
 
-class Car {
-  private engine: Engine;
-  constructor() {
-    this.engine = new Engine();
-  }
-  startCar(): void {
-    this.engine.start();
-  }
+const book1 = new Book(101, "ikki eshik oraasi", "Anonim1");
+const book2 = new Book(102, "Alkimyogar", "Anonim2");
 
-  stop(): void{
-    this.engine.stop()
-  }
-}
+const Library1 = new Library();
 
-const car1 = new Car()
-car1.startCar()
-car1.stop()
+Library1.addBook(book1);
+Library1.addBook(book2);
+
+console.log(Library1.findBook(100))
+
+console.log(Library.totalLibraries);
+console.log(Library1.bookCount);
