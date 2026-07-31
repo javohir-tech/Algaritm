@@ -5,6 +5,9 @@ class Animal {
     constructor(name) {
         this.name = name;
     }
+    //  inetrfacelardan ham shoplon  sifatida foydalansa bo'ladi 
+    // lekin abbstract class lar bilan shaplon yaratganda shunday qo'shimcha methodlaar 
+    //  yozsa bo'ladi  
     move() {
         console.log(`${this.name}`);
     }
