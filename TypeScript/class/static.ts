@@ -1,19 +1,20 @@
-class Animal {
-  static title: string = "josh";
-  
+class Person {
+  firstName: string;
+  static lastName: string = "Suvonov";
 
-  static makeSound(){
-    console.log("wow")
+  constructor(name: string) {
+    this.firstName = name;
   }
 
+  // bu  yerda this obyektga yo'nalgan bo'ladi  
+  getName(){
+    console.log(`${this.firstName}`)
+  }
+
+  // static methodlarda this  aynana shu class ga yo'nalgan bo'ladi
+  static getLastName() {
+    console.log(`${this.lastName} `);
+  }
 }
 
-class Cat extends Animal {
-
-}
-
-console.log(Animal.title)
-Animal.makeSound()
-
-console.log(Cat.title)
-Cat.makeSound()
+Person.getLastName();
