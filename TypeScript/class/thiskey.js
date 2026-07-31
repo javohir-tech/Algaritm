@@ -9,6 +9,7 @@ class Count {
 }
 const c = new Count();
 // c.increment();
+// const func = c.increment
 const func = c.increment.bind(c);
 func();
 func();
