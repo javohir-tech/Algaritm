@@ -6,8 +6,17 @@ interface IUser {
 
 type KeysUser = keyof IUser;
 
-function getProporty(key : KeysUser) {
-    console.log(key)
+const user = {
+    name : "Javohir" , 
+    age: 22, 
+    email : "suvonovjavohir625@gmail.com"
 }
 
-getProporty("name")
+type keys = keyof typeof user
+
+function getKeys(keys : keys){
+    console.log(keys)
+}
+
+getKeys("age")
+
