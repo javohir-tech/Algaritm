@@ -1,24 +1,19 @@
-interface IHas {
-    id : number
+function getProporty<T, K extends keyof T>(obj:T , key : K):T[K]{
+    return obj[key]
 }
 
-const obj : IHas = {
-    id : 1
+interface IUser {
+    id : number ,  
+    name : string  , 
+    email : string
 }
 
-interface IProduct {
-    id : number ; 
-    title : string ;
+type userKeys = keyof IUser
+
+const user : IUser = {
+    id : 23 , 
+    name : "Javohir" , 
+    email : "suvonovjavohir625@gmail.com"
 }
 
-const product1  : IProduct ={
-    id : 12 ,
-    title : "Iphone"
-}
-
-function getId<T extends IHas>(arg : T):number{
-    return arg.id
-}
-
-console.log(getId<IHas>(obj))
-console.log(getId<IProduct>(product1))
+console.log(getProporty<IUser , userKeys>(user , "name"))

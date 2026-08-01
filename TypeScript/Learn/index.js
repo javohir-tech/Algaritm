@@ -1,15 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const obj = {
-    id: 1
-};
-const product1 = {
-    id: 12,
-    title: "Iphone"
-};
-function getId(arg) {
-    return arg.id;
+function getProporty(obj, key) {
+    return obj[key];
 }
-console.log(getId(obj));
-console.log(getId(product1));
+const user = {
+    id: 23,
+    name: "Javohir",
+    email: "suvonovjavohir625@gmail.com"
+};
+console.log(getProporty(user, "name"));
 //# sourceMappingURL=index.js.map
