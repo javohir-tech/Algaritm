@@ -1,1 +1,1 @@
-{"version":3,"file":"funcGeneric.js","sourceRoot":"","sources":["funcGeneric.ts"],"names":[],"mappings":";;AAYA,SAAS,UAAU,CAAU,IAAO,EAAE,IAAO,EAAE,IAAO;IAClD,OAAO,EAAC,GAAG,IAAI,EAAG,GAAG,IAAI,EAAG,GAAG,IAAI,EAAC,CAAA;AACxC,CAAC;AAGD,OAAO,CAAC,GAAG,CAAC,UAAU,CAA4B,EAAC,IAAI,EAAG,MAAM,EAAC,EAAG,EAAC,IAAI,EAAG,KAAK,EAAC,EAAG,EAAC,GAAG,EAAG,EAAE,EAAC,CAAC,CAAC,CAAA"}
+{"version":3,"file":"funcGeneric.js","sourceRoot":"","sources":["funcGeneric.ts"],"names":[],"mappings":""}
