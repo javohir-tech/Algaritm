@@ -1,11 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const user = {
-    name: "Javohir",
-    age: 22,
-};
-function getUserName(obj) {
-    return obj.name;
+function getProporty(key) {
+    console.log(key);
 }
-console.log(getUserName(user));
+getProporty("name");
 //# sourceMappingURL=typeofkeyof.js.map

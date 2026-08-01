@@ -1,14 +1,13 @@
-const user = {
-  name: "Javohir",
-  age: 22,
-};
-
-type TypeUser = typeof user
-
-function getUserName(obj : TypeUser): string {
-    return obj.name
+interface IUser {
+  name: string;
+  age: string;
+  isMerried: boolean;
 }
 
-console.log(getUserName(user))
+type KeysUser = keyof IUser;
 
+function getProporty(key : KeysUser) {
+    console.log(key)
+}
 
+getProporty("name")
