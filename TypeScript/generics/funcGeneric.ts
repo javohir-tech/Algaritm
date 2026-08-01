@@ -1,20 +1,13 @@
-function logger<T>(val: T): T {
-  return val;
+enum Role {
+  ADMIN,
+  USER,
 }
 
-console.log(logger<number>(12));
+type UserRole = Record<string, number>;
 
-interface IUser {
-  name: string;
-  age: number;
-}
+const roles: UserRole = {
+  admin: Role.ADMIN,
+  user: Role.USER,
+};
 
-function getFirstItem<T>(args: T[]): T | undefined {
-  return args[0];
-}
-
-const firstNumber = getFirstItem<number>([10, 21]);
-const firstString = getFirstItem<string>(["ali", "vali"]);
-const firstUser = getFirstItem<IUser>([{ name: "ali", age: 22 }]);
-console.log(firstString)
 
