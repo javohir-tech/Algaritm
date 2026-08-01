@@ -1,13 +1,18 @@
-enum Role {
-  ADMIN,
-  USER,
+interface IUser {
+  name: string;
 }
 
-type UserRole = Record<string, number>;
+interface Employee {
+  role: "Admin" | "Dev";
+}
 
-const roles: UserRole = {
-  admin: Role.ADMIN,
-  user: Role.USER,
-};
+interface Person {
+  age: number;
+}
+
+function concatFunc<T, K, U>(val1: T, val2: K, val3: U): T & K & U {
+    return {...val1 , ...val2 , ...val3}
+}
 
 
+console.log(concatFunc<IUser , Employee , Person>({name : "Jonh"} , {role : "Dev"} , {age : 22}))

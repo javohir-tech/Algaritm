@@ -1,14 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function logger(val) {
-    return val;
+function concatFunc(val1, val2, val3) {
+    return { ...val1, ...val2, ...val3 };
 }
-console.log(logger(12));
-function getFirstItem(args) {
-    return args[0];
-}
-const firstNumber = getFirstItem([10, 21]);
-const firstString = getFirstItem(["ali", "vali"]);
-const firstUser = getFirstItem([{ name: "ali", age: 22 }]);
-console.log(firstString);
+console.log(concatFunc({ name: "Jonh" }, { role: "Dev" }, { age: 22 }));
 //# sourceMappingURL=funcGeneric.js.map
