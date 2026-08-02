@@ -1,16 +1,17 @@
-interface IAnimal {
+// PICK AND OMIT
+
+// 1.Pick<T , K> faqat tanlangan qiymatlaarni oladi  
+
+interface IUser {
   name: string;
   age: number;
-  sex : string ;
-  high : number
+  address: string;
+  avatar: string;
+  phone: number;
 }
 
-interface IPlan {
-  name: string;
-  age : number;
-  color: string;
-}
+type UserContactProporties = Pick<IUser, "phone" | "address">;
 
-type CommonProporties = Extract<keyof IAnimal, keyof IPlan>;
+// 2.Omit<T, K> keraksiz qiymatlarni olip tashlaydi 
 
-type UnCommonProporties  = Exclude<keyof IAnimal , keyof IPlan>
+type UserInfoProporties = Omit<IUser , "phone" | "address">
