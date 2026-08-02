@@ -1,19 +1,35 @@
-function getProporty<T, K extends keyof T>(obj:T , key : K):T[K]{
+interface IUser {
+  name: string;
+  age: number;
+  isMerried: boolean;
+}
+
+// indexed access
+type UserName = IUser["name"];
+
+// conversations
+
+type A<T> = T extends boolean ? "yes" | "ha" : "no" | "yoq";
+
+type BooleanType = A<boolean>; // "yes" | "ha"
+type StringType = A<string>; // "no" | "yoq"
+
+function getProporty<T , K extends keyof T>(obj : T , key :K):T[K]{
     return obj[key]
 }
 
-interface IUser {
-    id : number ,  
-    name : string  , 
-    email : string
+
+interface  IAdmin {
+    role : "admin" ;
+    access : true
 }
 
-type userKeys = keyof IUser
-
-const user : IUser = {
-    id : 23 , 
-    name : "Javohir" , 
-    email : "suvonovjavohir625@gmail.com"
+interface IGuest {
+    role : "guest" ;
+    access : "false"
 }
 
-console.log(getProporty<IUser , userKeys>(user , "name"))
+type RoleAccess<T> = T extends {role : "admin"} ? true : false
+
+type AdminType = RoleAccess<IAdmin> // true
+type GuestType = RoleAccess<IGuest> // false
