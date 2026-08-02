@@ -1,17 +1,14 @@
-// PICK AND OMIT
+// ReturnType<T> funksiyadan qaytgan qiymat tipini olish uchun
 
-// 1.Pick<T , K> faqat tanlangan qiymatlaarni oladi  
-
-interface IUser {
-  name: string;
-  age: number;
-  address: string;
-  avatar: string;
-  phone: number;
+function calc(a: number, b: number): number {
+  return a + b;
 }
 
-type UserContactProporties = Pick<IUser, "phone" | "address">;
+type CalcReturnType = ReturnType<typeof calc>;
 
-// 2.Omit<T, K> keraksiz qiymatlarni olip tashlaydi 
+type CalcParametrs = Parameters<typeof calc>
 
-type UserInfoProporties = Omit<IUser , "phone" | "address">
+const params : CalcParametrs = [1 , 2]
+
+const res: CalcReturnType = calc(...params);
+console.log(res)
