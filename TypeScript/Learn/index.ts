@@ -1,12 +1,9 @@
-// ContructorParams - class laarni constructor funksiyalariga berilgan parametrlarni tipini olish uchun ishlatiladi
+// Awaited - asinxron funksiyalarda
 
-class User {
-  constructor(name : string , age : number){
-
-  }
+async function getFetch(): Promise<string> {
+  return "Data";
 }
 
-type UserClassParams = ConstructorParameters<typeof  User>
+type TypeFetchData = Awaited<ReturnType<typeof getFetch>>;
 
-const params : UserClassParams = ["javohir" , 22]
-const user = new User(...params)
+const example: TypeFetchData = 'whats app guy'

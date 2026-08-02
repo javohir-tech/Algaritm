@@ -1,10 +1,8 @@
 "use strict";
-// ContructorParams - class laarni constructor funksiyalariga berilgan parametrlarni tipini olish uchun ishlatiladi
+// Awaited - asinxron funksiyalarda
 Object.defineProperty(exports, "__esModule", { value: true });
-class User {
-    constructor(name, age) {
-    }
+async function getFetch() {
+    return "Data";
 }
-const params = ["javohir", 22];
-const user = new User(...params);
+const example = 'whats app guy';
 //# sourceMappingURL=index.js.map
