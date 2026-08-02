@@ -1,4 +1,5 @@
 // ReturnType<T> funksiyadan qaytgan qiymat tipini olish uchun
+// Parametrs<T> funksiyaga uzatilgan parametrlarni tipini olish uchun 
 
 function calc(a: number, b: number): number {
   return a + b;
