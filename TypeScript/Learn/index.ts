@@ -1,46 +1,47 @@
-interface FormDataType {
-  name: string;
-  email: string;
-  password: string;
+interface IProduct {
+name: string;
+  id: number;
+  price: number;
+  expect?: string;
 }
 
-interface FormErrorType {
-  name?: string;
-  email?: string;
-  password?: string;
-}
-
-function formValidation<T extends FormDataType>(data: T): FormErrorType {
-  const errors: FormErrorType = {};
-
-  if (!data.email) {
-    errors.email = "Emalnni kiritish shart";
-  } else if (!data.email.includes("@")) {
-    errors.email = "Email is  Invalid";
-  }
-
-  if (!data.name) {
-    errors.name = "Ism kiritilmagan";
-  } else if (data.name.length < 3) {
-    errors.name = "Ism kamida 3ta belgidan iborat bo'lishi kerak";
-  }
-
-  if (!data.password) {
-    errors.password = "Password kiritilmagan";
-  } else if (data.password.length < 6) {
-    errors.password = "Password kamida 6 ta belgidan ibboraat bo'lishi kerak";
-  }
-
-  return errors;
-}
-
-// test
-const user1: FormDataType = {
-  name: "Javohir",
-  email: "suvonovjavohir625@gmail.com",
-  password: "1234556",
+const product: IProduct = {
+  name: "iphone",
+  id: 101,
+  price: 800,
+  expect: "chess",
 };
 
+// 1 .Required
+// expect optional lekin berish kerak sabab Required ishlatilgan
+// typeni hamma proportylarini majburiy qilip qo'yadi qilip qo'yadi 
 
-console.log(formValidation<FormDataType>(user1))
+function createProduct(product: Required<IProduct>): IProduct {
+  return product;
+}
+console.log(createProduct({ name: "samsung", price: 500, id: 102, expect: "chess" }))
 
+// 2 .Partial 
+// product Partial berilgan shuning uchun istalgan propotyni uztsa boladi 
+// typeni hamma proportylarini optoinal qilip qo'yadi
+
+function updatedProduct(updateProduct : Partial<IProduct>){
+    const updatedProduct = {...product , ...updateProduct}
+    console.log(updatedProduct)
+}
+
+console.log(product)
+updatedProduct({price : 600}) 
+
+// 3. Readonly
+// Bu hamma proportylarni readonly qilip qo'yadi va o'zgartiripp  bo'lmaydi
+
+type ReadonlyProduct = Readonly<IProduct>
+
+const product2  : ReadonlyProduct = {
+    name  : "honor" , 
+    price : 400 , 
+    id : 303 
+}
+
+// product2.name = "Redmi" //Error 

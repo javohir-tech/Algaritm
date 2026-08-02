@@ -1,32 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function formValidation(data) {
-    const errors = {};
-    if (!data.email) {
-        errors.email = "Emalnni kiritish shart";
-    }
-    else if (!data.email.includes("@")) {
-        errors.email = "Email is  Invalid";
-    }
-    if (!data.name) {
-        errors.name = "Ism kiritilmagan";
-    }
-    else if (data.name.length < 3) {
-        errors.name = "Ism kamida 3ta belgidan iborat bo'lishi kerak";
-    }
-    if (!data.password) {
-        errors.password = "Password kiritilmagan";
-    }
-    else if (data.password.length < 6) {
-        errors.password = "Password kamida 6 ta belgidan ibboraat bo'lishi kerak";
-    }
-    return errors;
-}
-// test
-const user1 = {
-    name: "Javohir",
-    email: "suvonovjavohir625@gmail.com",
-    password: "1234556",
+const product = {
+    name: "iphone",
+    id: 101,
+    price: 800,
+    expect: "chess",
 };
-console.log(formValidation(user1));
+// 1 .Required
+// expect optional lekin berish kerak sabab Required ishlatilgan
+// typeni hamma proportylarini majburiy qilip qo'yadi qilip qo'yadi 
+function createProduct(product) {
+    return product;
+}
+console.log(createProduct({ name: "samsung", price: 500, id: 102, expect: "chess" }));
+// 2 .Partial 
+// product Partial berilgan shuning uchun istalgan propotyni uztsa boladi 
+// typeni hamma proportylarini optoinal qilip qo'yadi
+function updatedProduct(updateProduct) {
+    const updatedProduct = { ...product, ...updateProduct };
+    console.log(updatedProduct);
+}
+console.log(product);
+updatedProduct({ price: 600 });
+const product2 = {
+    name: "honor",
+    price: 400,
+    id: 303
+};
+// product2.name = "Redmi" //Error 
 //# sourceMappingURL=index.js.map
