@@ -1,15 +1,12 @@
-// ReturnType<T> funksiyadan qaytgan qiymat tipini olish uchun
-// Parametrs<T> funksiyaga uzatilgan parametrlarni tipini olish uchun 
+// ContructorParams - class laarni constructor funksiyalariga berilgan parametrlarni tipini olish uchun ishlatiladi
 
-function calc(a: number, b: number): number {
-  return a + b;
+class User {
+  constructor(name : string , age : number){
+
+  }
 }
 
-type CalcReturnType = ReturnType<typeof calc>;
+type UserClassParams = ConstructorParameters<typeof  User>
 
-type CalcParametrs = Parameters<typeof calc>
-
-const params : CalcParametrs = [1 , 2]
-
-const res: CalcReturnType = calc(...params);
-console.log(res)
+const params : UserClassParams = ["javohir" , 22]
+const user = new User(...params)

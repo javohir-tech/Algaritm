@@ -1,10 +1,10 @@
 "use strict";
-// ReturnType<T> funksiyadan qaytgan qiymat tipini olish uchun
+// ContructorParams - class laarni constructor funksiyalariga berilgan parametrlarni tipini olish uchun ishlatiladi
 Object.defineProperty(exports, "__esModule", { value: true });
-function calc(a, b) {
-    return a + b;
+class User {
+    constructor(name, age) {
+    }
 }
-const params = [1, 2];
-const res = calc(...params);
-console.log(res);
+const params = ["javohir", 22];
+const user = new User(...params);
 //# sourceMappingURL=index.js.map
