@@ -9,12 +9,11 @@ function CanLog<TBase extends Constructor>(Base: TBase) {
 }
 
 interface IHasRole {
-  role : string
+  role: string;
 }
 
 function CanAccess<TBase extends Constructor<IHasRole>>(Base: TBase) {
   return class extends Base {
-    role: string = "guest";
 
     setRole(role: string) {
       this.role = role;
@@ -39,49 +38,51 @@ function CanValidate<TBase extends Constructor>(Base: TBase) {
 }
 
 class User {
-  role : string ;
+  role: string;
 
-  constructor(role : string) {
-    this.role = role
+  constructor(role: string) {
+    this.role = role;
   }
 }
 
-const UserMixin = CanLog(User);
+const UserMixin = CanLog(CanAccess(CanValidate(User)));
 
 class UserServices extends UserMixin {
-  // createUser(email: string, name: string) {
-  //   if (!this.isValidEmail(email)) {
-  //     this.log("email is Invalid");
-  //     return;
-  //   }
-
-  //   if (!this.isNotEmpty(email)) {
-  //     this.log("Email  is  empty");
-  //     return
-  //   }
-
-  //   if(!this.isNotEmpty(name)){
-  //     this.log("Name  is empty")
-  //     return
-  //   }
-
-  //   if(!this.canAccess("admin")){
-  //     this.log("Sizga bu amaliyotni bajarish taqiqlangan")
-  //     return
-  //   }
-
-  //   this.log(`User is created : ${name} ${email}`)
-  // }
+  createUser(email: string, name: string) {
+    if (!this.isValidEmail(email)) {
+      this.log("email is Invalid");
+      return;
+    }
+    if (!this.isNotEmpty(email)) {
+      this.log("Email  is  empty");
+      return;
+    }
+    if (!this.isNotEmpty(name)) {
+      this.log("Name  is empty");
+      return;
+    }
+    if (!this.canAccess("admin")) {
+      this.log("Sizga bu amaliyotni bajarish taqiqlangan");
+      return;
+    }
+    this.log(`User is created : ${name} ${email}`);
+  }
 }
 
-const userService =  new UserServices("user")
-const userService1 =  new UserServices("admin")
-userService.log("salom")
+const userService = new UserServices("user");
+const userService1 = new UserServices("admin");
+const c : Constructor<UserServices> = UserServices;
 
-// userService.setRole("user")
-// userService.createUser("user@gmail.com" ,  "josh")
+const user  = new c("admin")
+console.log(user.role)
+user.setRole("admin")
+user.createUser("suvonov@gmail.com" , "john")
 
-// userService1.setRole("admin")
-// userService1.createUser("user@gmail.com" , "doe")
 
+// userService.log("salom");
 
+// userService.setRole("user");
+// userService.createUser("user@gmail.com", "josh");
+
+// userService1.setRole("admin");
+// userService1.createUser("user@gmail.com", "doe");
