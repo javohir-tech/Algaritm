@@ -1,0 +1,4 @@
+class AuthClass {
+    constructor() { }
+}
+export {};

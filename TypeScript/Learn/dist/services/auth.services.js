@@ -1,0 +1,4 @@
+class AuthClassOptions {
+    constructor() { }
+}
+export {};

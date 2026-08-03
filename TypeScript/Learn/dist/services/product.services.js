@@ -1,0 +1,4 @@
+class ProductClass {
+    constructor() { }
+}
+export {};

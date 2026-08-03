@@ -1,0 +1,3 @@
+class AuthClassOptions {
+  constructor() {}
+}

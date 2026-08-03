@@ -1,0 +1,5 @@
+class IndexCLass {
+    constructor() {
+    }
+}
+export {};

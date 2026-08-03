@@ -1,0 +1,5 @@
+class PriceClass {
+    constructor() {
+    }
+}
+export {};
