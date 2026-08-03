@@ -1,4 +1,0 @@
-class AuthClass {
-    constructor() { }
-}
-export {};

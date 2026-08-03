@@ -1,4 +1,0 @@
-class ProductClass {
-    constructor() { }
-}
-export {};

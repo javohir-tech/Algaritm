@@ -1,5 +1,0 @@
-class IndexCLass {
-  constructor() { 
-    
-  }
-}

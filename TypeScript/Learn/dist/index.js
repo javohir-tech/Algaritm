@@ -1,5 +1,1 @@
-class IndexCLass {
-    constructor() {
-    }
-}
 export {};
