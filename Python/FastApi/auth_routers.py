@@ -1,11 +1,16 @@
-from fastapi import APIRouter, status
-from schemas import UserModel
-from database import session
 from models import User
+from database import session
+from schemas import UserModel
+from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 from werkzeug.security import generate_password_hash, check_password_hash
+from config import settings
+
+# from fastapi.security import OAuth2PasswordBearer
+from token_service import create_access_token, create_refresh_token
 
 auth_routes = APIRouter(prefix="/auth")
+# oauth2_schema = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 @auth_routes.get("/")
@@ -13,7 +18,7 @@ async def get_signup():
     return "sign up path"
 
 
-@auth_routes.post("/signup")
+@auth_routes.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(user: UserModel):
 
     db_email = session.query(User).filter(User.email == user.email).first()
@@ -44,11 +49,18 @@ async def signup(user: UserModel):
     session.commit()
     session.refresh(new_user)
 
+    access_token = create_access_token(sub=new_user.username)
+    refresh_token = create_refresh_token(sub=new_user.username)
+
     return {
         "message": "User created successfully",
         "user": {
             "id": new_user.id,
             "username": new_user.username,
             "email": new_user.email,
+            "access_token": access_token,
+            "refresh_token": refresh_token,
         },
     }
+
+
