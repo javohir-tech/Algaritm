@@ -1,6 +1,6 @@
 from models import User
 from database import session
-from schemas import UserModel
+from schemas import UserModel, LoginModel
 from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -64,3 +64,26 @@ async def signup(user: UserModel):
     }
 
 
+@auth_routes.post("/login", status_code=status.HTTP_200_OK)
+async def signin(user: LoginModel):
+
+    db_user = session.query(User).filter(User.username == user.username).first()
+
+    if db_user and check_password_hash(db_user.password, user.password):
+        access_token = create_access_token(sub=user.username)
+        refresh_token = create_refresh_token(sub=user.username)
+
+        tokens = {
+            "refresh_token": refresh_token,
+            "access_token": access_token,
+        }
+
+        return {
+            "success": True,
+            "message": "user successfuly login",
+            "data": tokens,
+        }
+
+    raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid username or password"
+    )

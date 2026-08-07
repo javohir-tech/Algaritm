@@ -23,3 +23,22 @@ class UserModel(BaseModel):
             }
         },
     )
+
+
+class LoginModel(BaseModel):
+    username: Optional[str]
+    password: str
+
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            "example_with_username": {
+                "username": "javohir",
+                "password": "password1234",
+            },
+            "example_with_email": {
+                "email": "suvonov@gmail.com",
+                "password": "password1234",
+            },
+        },
+    )
