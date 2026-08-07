@@ -1,7 +1,9 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base , sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
+from config import settings
 
-engine = create_engine("postgresql//:anonim:1234@localhost/delivary" , echo=True)
+engine = create_engine(settings.database_url, echo=True)
 
 Base = declarative_base()
-Session = sessionmaker()
+Session = sessionmaker(bind=engine)
+session = Session()
