@@ -1,7 +1,11 @@
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
 from config import settings
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+import uuid
+
+secuirty = HTTPBearer()
 
 
 def create_access_token(sub: str, expires_delta: timedelta = None):
@@ -10,7 +14,7 @@ def create_access_token(sub: str, expires_delta: timedelta = None):
     else:
         expire = datetime.now() + timedelta(hours=1)
 
-    to_encode = {"sub": sub, "exp": expire, "type": "access"}
+    to_encode = {"sub": sub, "exp": expire, "type": "access", "jti": str(uuid.uuid4())}
 
     encode_jwt = jwt.encode(
         to_encode,
@@ -28,7 +32,7 @@ def create_refresh_token(sub: str, expire_delta: timedelta = None):
     else:
         expire = datetime.now() + timedelta(days=7)
 
-    to_encode = {"sub": sub, "exp": expire, "type": "refresh"}
+    to_encode = {"sub": sub, "exp": expire, "type": "refresh", "jti": str(uuid.uuid4())}
 
     encode_jwt = jwt.encode(
         to_encode,
@@ -39,8 +43,12 @@ def create_refresh_token(sub: str, expire_delta: timedelta = None):
     return encode_jwt
 
 
-def verify(token: str, token_type: str = "access"):
+def verify(
+    credentials: HTTPAuthorizationCredentials = Depends(secuirty),
+    token_type: str = "access",
+) -> str:
     """token tekshirish"""
+    token = credentials.credentials
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.algarimt])
 

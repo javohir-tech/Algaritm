@@ -1,4 +1,4 @@
-from models import User
+from models import User, TokenBlackList
 from schemas import UserModel, LoginModel, RefreshToken
 from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
@@ -6,12 +6,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_db
+from datetime import datetime
 
-# from fastapi.security import OAuth2PasswordBearer
-from token_service import create_access_token, create_refresh_token, verify
+from token_service import (
+    create_access_token,
+    create_refresh_token,
+    verify,
+    decode_token,
+)
 
 auth_routes = APIRouter(prefix="/auth")
-# oauth2_schema = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 @auth_routes.get("/")
@@ -108,8 +112,20 @@ async def signin(user: LoginModel, db: AsyncSession = Depends(get_db)):
 
 
 @auth_routes.post("/refresh", status_code=status.HTTP_200_OK)
-async def refresh_token(token: RefreshToken, db: AsyncSession = Depends(get_db)):
-    username = verify(token.refresh_token, "refresh")
+async def refresh_token(
+    token: RefreshToken,
+    db: AsyncSession = Depends(get_db),
+    current_user: str = Depends(verify),
+):
+    payload = decode_token(token.refresh_token)
+
+    username = payload["sub"]
+    token_type = payload["type"]
+
+    if token_type != "refresh":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )
 
     result = await db.execute(select(User).filter(User.username == username))
 
@@ -127,3 +143,30 @@ async def refresh_token(token: RefreshToken, db: AsyncSession = Depends(get_db))
         "message": "Access token successfully refreshed",
         "access_token": access_token,
     }
+
+
+@auth_routes.get("/protected")
+async def protected_route(current_user: str = Depends(verify)):
+    return {"messaage": f"Salom , {current_user} siz royhatdan otgansiz"}
+
+
+@auth_routes.post("/logout", status_code=status.HTTP_200_OK)
+async def logout(
+    token: RefreshToken,
+    current_user: str = Depends(verify),
+    db: AsyncSession = Depends(get_db),
+):
+    print("=" * 50)
+    print("=" * 50)
+    de_code_token = decode_token(token.refresh_token)
+    print(de_code_token)
+    print("=" * 50)
+    print("=" * 50)
+    exp = de_code_token["exp"]
+    jti = de_code_token["jti"]
+    print(jti ,  exp)
+    black_list_token = TokenBlackList(expires_at=datetime.fromtimestamp(exp), jti=jti)
+    db.add(black_list_token)
+    await db.commit()
+    await db.refresh(black_list_token)
+    return {"msg": "logout"}

@@ -1,8 +1,9 @@
 from database import Base
-from sqlalchemy import Text, String, Boolean, Integer, ForeignKey
+from sqlalchemy import Text, String, Boolean, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import ChoiceType
 from enum import Enum
+from datetime import datetime
 
 
 class User(Base):
@@ -49,4 +50,14 @@ class Product(Base):
     name: Mapped[str] = mapped_column(String(100))
     price: Mapped[int] = mapped_column(Integer)
 
-    orders: Mapped[list["Order"]] = relationship(back_populates="product", lazy="select")
+    orders: Mapped[list["Order"]] = relationship(
+        back_populates="product", lazy="select"
+    )
+
+
+class TokenBlackList(Base):
+    __tablename__ = "token_blacklist"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    jti: Mapped[str] = mapped_column(String, unique=True, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime)
