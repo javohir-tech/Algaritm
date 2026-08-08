@@ -5,6 +5,7 @@ from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import settings
+from sqlalchemy import or_
 
 # from fastapi.security import OAuth2PasswordBearer
 from token_service import create_access_token, create_refresh_token
@@ -67,11 +68,24 @@ async def signup(user: UserModel):
 @auth_routes.post("/login", status_code=status.HTTP_200_OK)
 async def signin(user: LoginModel):
 
-    db_user = session.query(User).filter(User.username == user.username).first()
+    # db_user = session.query(User).filter(User.username == user.username).first()
+
+    # username or email
+
+    db_user = (
+        session.query(User)
+        .filter(
+            or_(
+                User.username == user.username_or_email,
+                User.email == user.username_or_email,
+            )
+        )
+        .first()
+    )
 
     if db_user and check_password_hash(db_user.password, user.password):
-        access_token = create_access_token(sub=user.username)
-        refresh_token = create_refresh_token(sub=user.username)
+        access_token = create_access_token(sub=db_user.username)
+        refresh_token = create_refresh_token(sub=db_user.username)
 
         tokens = {
             "refresh_token": refresh_token,

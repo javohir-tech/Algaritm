@@ -26,19 +26,15 @@ class UserModel(BaseModel):
 
 
 class LoginModel(BaseModel):
-    username: Optional[str]
+    username_or_email: str
     password: str
 
     model_config = ConfigDict(
         from_attributes=True,
         json_schema_extra={
-            "example_with_username": {
-                "username": "javohir",
+            "example": {
+                "username_or_email": "javohir or javohir@gmail.com",
                 "password": "password1234",
-            },
-            "example_with_email": {
-                "email": "suvonov@gmail.com",
-                "password": "password1234",
-            },
+            }
         },
     )
