@@ -1,5 +1,5 @@
 from models import User
-from schemas import UserModel, LoginModel
+from schemas import UserModel, LoginModel, RefreshToken
 from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_db
 
 # from fastapi.security import OAuth2PasswordBearer
-from token_service import create_access_token, create_refresh_token
+from token_service import create_access_token, create_refresh_token, verify
 
 auth_routes = APIRouter(prefix="/auth")
 # oauth2_schema = OAuth2PasswordBearer(tokenUrl="auth/login")
@@ -105,3 +105,25 @@ async def signin(user: LoginModel, db: AsyncSession = Depends(get_db)):
     raise HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid username or password"
     )
+
+
+@auth_routes.post("/refresh", status_code=status.HTTP_200_OK)
+async def refresh_token(token: RefreshToken, db: AsyncSession = Depends(get_db)):
+    username = verify(token.refresh_token, "refresh")
+
+    result = await db.execute(select(User).filter(User.username == username))
+
+    user = result.scalar_one_or_none()
+
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )
+
+    access_token = create_access_token(sub=username)
+
+    return {
+        "success": True,
+        "message": "Access token successfully refreshed",
+        "access_token": access_token,
+    }

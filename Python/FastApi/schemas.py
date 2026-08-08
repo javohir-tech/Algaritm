@@ -38,3 +38,6 @@ class LoginModel(BaseModel):
             }
         },
     )
+
+class RefreshToken(BaseModel):
+    refresh_token : str
