@@ -1,6 +1,6 @@
 from database import Base
-from sqlalchemy import Column, Text, String, Boolean, Integer, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Text, String, Boolean, Integer, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import ChoiceType
 from enum import Enum
 
@@ -8,19 +8,19 @@ from enum import Enum
 class User(Base):
     __tablename__ = "user"
 
-    id = Column(Integer, primary_key=True)
-    username = Column(String(25), unique=True)
-    password = Column(Text, nullable=False)
-    email = Column(String(75), unique=True)
-    is_staff = Column(Boolean, default=False)
-    is_active = Column(Boolean, default=False)
-    orders = relationship(
-        "Order", back_populates="user", cascade="all, delete-orphan"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(25), unique=True)
+    password: Mapped[str] = mapped_column(Text, nullable=False)
+    email: Mapped[str] = mapped_column(String(75), unique=True)
+    is_staff: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    orders: Mapped[list["Order"]] = relationship(
+        back_populates="user", cascade="all, delete-orphan", lazy="raise"
     )
 
 
 class Order(Base):
-
     __tablename__ = "order"
 
     class StatusType(Enum):
@@ -28,21 +28,25 @@ class Order(Base):
         IN_TRANSIT = "in_transit"
         DELIVERED = "delivered"
 
-    id = Column(Integer, primary_key=True)
-    price = Column(Integer)
-    quantity = Column(Integer)
-    status = Column(ChoiceType(StatusType), default=StatusType.PENDING)
-    user_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"))
-    user = relationship("User", back_populates="orders")
-    product_id = Column(Integer, ForeignKey("product.id"))
-    product = relationship("Product", back_populates="orders")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    price: Mapped[int] = mapped_column(Integer)
+    quantity: Mapped[int] = mapped_column(Integer)
+    status: Mapped[StatusType] = mapped_column(
+        ChoiceType(StatusType), default=StatusType.PENDING
+    )
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))
+    user: Mapped["User"] = relationship(back_populates="orders", lazy="raise")
+
+    product_id: Mapped[int] = mapped_column(ForeignKey("product.id"))
+    product: Mapped["Product"] = relationship(back_populates="orders", lazy="raise")
 
 
 class Product(Base):
-
     __tablename__ = "product"
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100))
-    price = Column(Integer)
-    orders = relationship("Order", back_populates="product")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(100))
+    price: Mapped[int] = mapped_column(Integer)
+
+    orders: Mapped[list["Order"]] = relationship(back_populates="product", lazy="select")

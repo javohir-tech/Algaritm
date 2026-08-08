@@ -1,11 +1,11 @@
 from models import User
-from database import session
 from schemas import UserModel, LoginModel
 from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 from werkzeug.security import generate_password_hash, check_password_hash
-from config import settings
-from sqlalchemy import or_
+from sqlalchemy import or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+from database import get_db
 
 # from fastapi.security import OAuth2PasswordBearer
 from token_service import create_access_token, create_refresh_token
@@ -20,22 +20,26 @@ async def get_signup():
 
 
 @auth_routes.post("/signup", status_code=status.HTTP_201_CREATED)
-async def signup(user: UserModel):
+async def signup(user: UserModel, db: AsyncSession = Depends(get_db)):
 
-    db_email = session.query(User).filter(User.email == user.email).first()
-
-    if db_email is not None:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="this email with already exists",
+    result = await db.execute(
+        select(User).filter(
+            or_(User.email == user.email, User.username == user.username)
         )
+    )
 
-    username = session.query(User).filter(User.username == user.username).first()
+    existing_user = result.scalar_one_or_none()
 
-    if username is not None:
+    if existing_user is not None:
+        if existing_user.email == user.email:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="this email already exists",
+            )
+
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="this username with already exists",
+            detail="this username already exists",
         )
 
     new_user = User(
@@ -46,9 +50,9 @@ async def signup(user: UserModel):
         is_staff=user.is_staff,
     )
 
-    session.add(new_user)
-    session.commit()
-    session.refresh(new_user)
+    db.add(new_user)
+    await db.commit()
+    await db.refresh(new_user)
 
     access_token = create_access_token(sub=new_user.username)
     refresh_token = create_refresh_token(sub=new_user.username)
@@ -66,26 +70,26 @@ async def signup(user: UserModel):
 
 
 @auth_routes.post("/login", status_code=status.HTTP_200_OK)
-async def signin(user: LoginModel):
+async def signin(user: LoginModel, db: AsyncSession = Depends(get_db)):
 
     # db_user = session.query(User).filter(User.username == user.username).first()
 
     # username or email
 
-    db_user = (
-        session.query(User)
-        .filter(
+    result = await db.execute(
+        select(User).filter(
             or_(
-                User.username == user.username_or_email,
                 User.email == user.username_or_email,
+                User.username == user.username_or_email,
             )
         )
-        .first()
     )
 
-    if db_user and check_password_hash(db_user.password, user.password):
-        access_token = create_access_token(sub=db_user.username)
-        refresh_token = create_refresh_token(sub=db_user.username)
+    existing_user = result.scalar_one_or_none()
+
+    if existing_user and check_password_hash(existing_user.password, user.password):
+        access_token = create_access_token(sub=existing_user.username)
+        refresh_token = create_refresh_token(sub=existing_user.username)
 
         tokens = {
             "refresh_token": refresh_token,
