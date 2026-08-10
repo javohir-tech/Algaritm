@@ -54,6 +54,12 @@ def verify(
 
         username: str = payload.get("sub")
         token_type_check: str = payload.get("type")
+        token_jti: str = payload.get("jti")
+
+        if token_jti is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+            )
 
         if username is None:
             raise HTTPException(

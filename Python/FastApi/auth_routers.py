@@ -7,6 +7,7 @@ from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_db
 from datetime import datetime
+from fastapi.responses import JSONResponse
 
 from token_service import (
     create_access_token,
@@ -156,17 +157,30 @@ async def logout(
     current_user: str = Depends(verify),
     db: AsyncSession = Depends(get_db),
 ):
-    print("=" * 50)
-    print("=" * 50)
     de_code_token = decode_token(token.refresh_token)
-    print(de_code_token)
-    print("=" * 50)
-    print("=" * 50)
+
+    if de_code_token is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )
+
     exp = de_code_token["exp"]
     jti = de_code_token["jti"]
-    print(jti ,  exp)
+
+    result = await db.execute(select(TokenBlackList).filter(jti == TokenBlackList.jti))
+
+    db_token = result.scalar_one_or_none()
+
+    if db_token:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="black listda bor "
+        )
+
     black_list_token = TokenBlackList(expires_at=datetime.fromtimestamp(exp), jti=jti)
+
     db.add(black_list_token)
     await db.commit()
     await db.refresh(black_list_token)
-    return {"msg": "logout"}
+    return JSONResponse(
+        status_code=status.HTTP_200_OK, content={"message": "successfuuly logout"}
+    )

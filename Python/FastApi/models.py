@@ -61,3 +61,6 @@ class TokenBlackList(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     jti: Mapped[str] = mapped_column(String, unique=True, index=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime)
+
+    def __repr__(self):
+        return self.jti
