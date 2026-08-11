@@ -8,7 +8,6 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_db
 from datetime import datetime
-from fastapi.responses import JSONResponse
 
 from token_service import (
     create_access_token,
