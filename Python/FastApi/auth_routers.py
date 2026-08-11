@@ -4,6 +4,7 @@ from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import or_, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_db
 from datetime import datetime
@@ -27,49 +28,38 @@ async def get_signup():
 @auth_routes.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(user: UserModel, db: AsyncSession = Depends(get_db)):
 
-    result = await db.execute(
-        select(User).filter(
-            or_(User.email == user.email, User.username == user.username)
-        )
-    )
-
-    existing_user = result.scalar_one_or_none()
-
-    if existing_user is not None:
-        if existing_user.email == user.email:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="this email already exists",
-            )
-
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="this username already exists",
-        )
-
     new_user = User(
         username=user.username,
-        email=user.email,
+        email=user.email.lower(),
         password=generate_password_hash(user.password),
-        is_active=user.is_active,
-        is_staff=user.is_staff,
     )
 
-    db.add(new_user)
-    await db.commit()
-    await db.refresh(new_user)
+    try:
+        db.add(new_user)
+        await db.commit()
+        await db.refresh(new_user)
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="username or email already taken",
+        )
 
     access_token = create_access_token(sub=new_user.username)
     refresh_token = create_refresh_token(sub=new_user.username)
 
     return {
+        "success": True,
         "message": "User created successfully",
-        "user": {
-            "id": new_user.id,
-            "username": new_user.username,
-            "email": new_user.email,
-            "access_token": access_token,
-            "refresh_token": refresh_token,
+        "data": {
+            "user": {
+                "id": new_user.id,
+                "username": new_user.username,
+                "email": new_user.email,
+                "is_staff": new_user.is_staff,
+                "is_active": new_user.is_active,
+            },
+            "tokens": {"access_token": access_token, "refresh_token": refresh_token},
         },
     }
 
@@ -77,14 +67,10 @@ async def signup(user: UserModel, db: AsyncSession = Depends(get_db)):
 @auth_routes.post("/login", status_code=status.HTTP_200_OK)
 async def signin(user: LoginModel, db: AsyncSession = Depends(get_db)):
 
-    # db_user = session.query(User).filter(User.username == user.username).first()
-
-    # username or email
-
     result = await db.execute(
         select(User).filter(
             or_(
-                User.email == user.username_or_email,
+                User.email == user.username_or_email.lower(),
                 User.username == user.username_or_email,
             )
         )
@@ -93,22 +79,37 @@ async def signin(user: LoginModel, db: AsyncSession = Depends(get_db)):
     existing_user = result.scalar_one_or_none()
 
     if existing_user and check_password_hash(existing_user.password, user.password):
+
+        if not existing_user.is_active:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="account is inactive"
+            )
+
         access_token = create_access_token(sub=existing_user.username)
         refresh_token = create_refresh_token(sub=existing_user.username)
 
         tokens = {
-            "refresh_token": refresh_token,
             "access_token": access_token,
+            "refresh_token": refresh_token,
         }
 
         return {
             "success": True,
-            "message": "user successfuly login",
-            "data": tokens,
+            "message": "User logged in successfully",
+            "data": {
+                "user": {
+                    "id": existing_user.id,
+                    "username": existing_user.username,
+                    "email": existing_user.email,
+                    "is_staff": existing_user.is_staff,
+                    "is_active": existing_user.is_active,
+                },
+                "tokens": tokens,
+            },
         }
 
     raise HTTPException(
-        status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid username or password"
+        status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password"
     )
 
 
@@ -116,14 +117,28 @@ async def signin(user: LoginModel, db: AsyncSession = Depends(get_db)):
 async def refresh_token(
     token: RefreshToken,
     db: AsyncSession = Depends(get_db),
-    current_user: str = Depends(verify),
 ):
+
     payload = decode_token(token.refresh_token)
 
-    username = payload["sub"]
-    token_type = payload["type"]
+    if payload is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired token"
+        )
 
-    if token_type != "refresh":
+    username = payload.sub
+    token_type = payload.type
+
+    result = await db.execute(
+        select(TokenBlackList).filter(TokenBlackList.jti == payload.jti)
+    )
+
+    if result.scalar_one_or_none() is not None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has been revoked"
+        )
+
+    if not username or token_type != "refresh":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
         )
@@ -142,13 +157,12 @@ async def refresh_token(
     return {
         "success": True,
         "message": "Access token successfully refreshed",
-        "access_token": access_token,
+        "data": {
+            "tokens": {
+                "access_token": access_token,
+            }
+        },
     }
-
-
-@auth_routes.get("/protected")
-async def protected_route(current_user: str = Depends(verify)):
-    return {"messaage": f"Salom , {current_user} siz royhatdan otgansiz"}
 
 
 @auth_routes.post("/logout", status_code=status.HTTP_200_OK)
@@ -163,9 +177,24 @@ async def logout(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
         )
+    if current_user != de_code_token.sub:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token does not belong to current user",
+        )
 
-    exp = de_code_token["exp"]
-    jti = de_code_token["jti"]
+    if de_code_token.type != "refresh":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )
+
+    exp = de_code_token.exp
+    jti = de_code_token.jti
+
+    if not exp or not jti:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )
 
     result = await db.execute(select(TokenBlackList).filter(jti == TokenBlackList.jti))
 
@@ -173,7 +202,8 @@ async def logout(
 
     if db_token:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="black listda bor "
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Token has already been revoked",
         )
 
     black_list_token = TokenBlackList(expires_at=datetime.fromtimestamp(exp), jti=jti)
@@ -181,6 +211,7 @@ async def logout(
     db.add(black_list_token)
     await db.commit()
     await db.refresh(black_list_token)
-    return JSONResponse(
-        status_code=status.HTTP_200_OK, content={"message": "successfuuly logout"}
-    )
+    return {
+        "success": True,
+        "message": "Successfully logged out",
+    }

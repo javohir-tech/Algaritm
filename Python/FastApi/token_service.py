@@ -4,8 +4,16 @@ from config import settings
 from fastapi import HTTPException, status, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import uuid
+from pydantic import BaseModel
 
 secuirty = HTTPBearer()
+
+
+class TokenPayload(BaseModel):
+    sub: str
+    exp: int
+    jti: str
+    type: str
 
 
 def create_access_token(sub: str, expires_delta: timedelta = None):
@@ -78,10 +86,10 @@ def verify(
         )
 
 
-def decode_token(token: str):
+def decode_token(token: str)->TokenPayload | None:
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=settings.algarimt)
+        raw_payload = jwt.decode(token, settings.SECRET_KEY, algorithms=settings.algarimt)
 
-        return payload
+        return TokenPayload(**raw_payload)
     except JWTError:
         return None

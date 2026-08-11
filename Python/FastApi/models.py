@@ -14,7 +14,7 @@ class User(Base):
     password: Mapped[str] = mapped_column(Text, nullable=False)
     email: Mapped[str] = mapped_column(String(75), unique=True)
     is_staff: Mapped[bool] = mapped_column(Boolean, default=False)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
     orders: Mapped[list["Order"]] = relationship(
         back_populates="user", cascade="all, delete-orphan", lazy="raise"

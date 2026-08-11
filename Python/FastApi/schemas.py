@@ -8,7 +8,7 @@ class UserModel(BaseModel):
     password: str
     email: str
     is_staff: Optional[bool] = False
-    is_active: Optional[bool] = False
+    is_active: Optional[bool] = True
 
     model_config = ConfigDict(
         from_attributes=True,
