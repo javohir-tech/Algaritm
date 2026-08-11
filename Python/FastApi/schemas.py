@@ -3,7 +3,6 @@ from typing import Optional
 
 
 class UserModel(BaseModel):
-    id: Optional[int] = None
     username: str
     password: str
     email: str
@@ -36,3 +35,8 @@ class LoginModel(BaseModel):
 
 class RefreshToken(BaseModel):
     refresh_token : str
+
+
+class Product(BaseModel):
+    name : str;
+    price : int ;
