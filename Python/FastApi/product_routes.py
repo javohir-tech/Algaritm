@@ -11,7 +11,7 @@ from schemas import ProductModel
 product_routes = APIRouter(prefix="/product")
 
 
-@product_routes.post("/create")
+@product_routes.post("/create", status_code=status.HTTP_201_CREATED)
 async def createProduct(
     product: ProductModel,
     db: AsyncSession = Depends(get_db),
@@ -69,6 +69,27 @@ async def getAll(db: AsyncSession = Depends(get_db)):
             "success": True,
             "message": "Products fetched successfully",
             "data": produtces,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}")
+
+
+@product_routes.get("/{product_id}")
+async def getProductById(product_id: int, db: AsyncSession = Depends(get_db)):
+    try:
+        result = await db.execute(select(Product).filter(Product.id == product_id))
+
+        product = result.scalar_one_or_none()
+
+        if product is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Product not found"
+            )
+
+        return {
+            "success": True,
+            "message": "Produc fetched successfully",
+            "data": {product},
         }
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}")
