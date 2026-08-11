@@ -58,7 +58,7 @@ async def createProduct(
     }
 
 
-@product_routes.get("/")
+@product_routes.get("/" ,  status_code=status.HTTP_200_OK)
 async def getAll(db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(Product))
@@ -74,7 +74,7 @@ async def getAll(db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}")
 
 
-@product_routes.get("/{product_id}")
+@product_routes.get("/{product_id}" , status_code=status.HTTP_200_OK)
 async def getProductById(product_id: int, db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(Product).filter(Product.id == product_id))
