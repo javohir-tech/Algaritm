@@ -37,6 +37,17 @@ class RefreshToken(BaseModel):
     refresh_token : str
 
 
-class Product(BaseModel):
+class ProductModel(BaseModel):
     name : str;
     price : int ;
+    user_id : Optional[int] = None;
+
+    model_config = ConfigDict(
+        from_attributes=True ,  
+        json_schema_extra={
+            "example" : {
+                "name" : "Iphone 14" , 
+                "price" : 550
+            }
+        }
+    )
