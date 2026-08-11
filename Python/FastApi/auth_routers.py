@@ -57,7 +57,7 @@ async def signup(user: UserModel, db: AsyncSession = Depends(get_db)):
                 "username": new_user.username,
                 "email": new_user.email,
                 "is_staff": new_user.is_staff,
-                "is_active": new_user.is_active,
+                "is_active": new_user.is_active,    
             },
             "tokens": {"access_token": access_token, "refresh_token": refresh_token},
         },
