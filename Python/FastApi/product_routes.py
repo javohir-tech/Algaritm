@@ -75,7 +75,7 @@ async def getAll(db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}")
 
 
-@product_routes.get("/my_products")
+@product_routes.get("/my_products" ,  status_code=status.HTTP_200_OK)
 async def getMyProduct(
     db: AsyncSession = Depends(get_db), current_user: str = Depends(verify)
 ):
@@ -114,8 +114,8 @@ async def getProductById(product_id: int, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}")
 
 
-@product_routes.put("/update/{product_id}")
-@product_routes.patch("/update/{product_id}")
+@product_routes.put("/update/{product_id}" , status_code=status.HTTP_200_OK)
+@product_routes.patch("/update/{product_id}" , status_code=status.HTTP_200_OK)
 async def updateProduct(
     product_id: int,
     update_product: ProductPatchModel,
