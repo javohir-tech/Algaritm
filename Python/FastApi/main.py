@@ -2,6 +2,7 @@ from config import settings
 from fastapi import FastAPI, Request, status
 from auth_routers import auth_routes
 from product_routes import product_routes
+from order_routes import order_routes
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -19,7 +20,7 @@ app.add_middleware(
 
 app.include_router(product_routes)
 app.include_router(auth_routes)
-
+app.include_router(order_routes)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
