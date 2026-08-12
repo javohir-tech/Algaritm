@@ -24,6 +24,9 @@ class User(Base):
         back_populates="user", cascade="all, delete-orphan", lazy="raise"
     )
 
+    def __repr__(self):
+        return self.username
+
 
 class Order(Base):
     __tablename__ = "order"

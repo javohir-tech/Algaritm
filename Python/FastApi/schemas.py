@@ -51,3 +51,17 @@ class ProductModel(BaseModel):
             }
         }
     )
+
+class ProductPatchModel(BaseModel):
+    name : Optional[str] = None
+    price : Optional[int] = None
+
+    model_config = ConfigDict(
+        from_attributes=True ,  
+        json_schema_extra={
+            "example" : {
+                "name" : "Iphone 14" , 
+                "price" : 550
+            }
+        }
+    )

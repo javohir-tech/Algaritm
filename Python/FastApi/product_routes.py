@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends, status
 from models import Product, User
 from sqlalchemy import or_, select
+from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from database import get_db
 from fastapi.exceptions import HTTPException
 from token_service import verify
-from schemas import ProductModel
+from schemas import ProductModel, ProductPatchModel
 
 product_routes = APIRouter(prefix="/product")
 
@@ -58,7 +59,7 @@ async def createProduct(
     }
 
 
-@product_routes.get("/" ,  status_code=status.HTTP_200_OK)
+@product_routes.get("/", status_code=status.HTTP_200_OK)
 async def getAll(db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(Product))
@@ -74,7 +75,7 @@ async def getAll(db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}")
 
 
-@product_routes.get("/{product_id}" , status_code=status.HTTP_200_OK)
+@product_routes.get("/{product_id}", status_code=status.HTTP_200_OK)
 async def getProductById(product_id: int, db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(Product).filter(Product.id == product_id))
@@ -93,3 +94,60 @@ async def getProductById(product_id: int, db: AsyncSession = Depends(get_db)):
         }
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"{e}")
+
+
+@product_routes.put("/update/{product_id}")
+@product_routes.patch("/update/{product_id}")
+async def updateProduct(
+    product_id: int,
+    update_product: ProductPatchModel,
+    db: AsyncSession = Depends(get_db),
+    current_user: str = Depends(verify),
+):
+
+    result_product = await db.execute(
+        select(Product)
+        .options(selectinload(Product.user))
+        .filter(Product.id == product_id)
+    )
+
+    product = result_product.scalar_one_or_none()
+
+    if product is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Product not found"
+        )
+
+    user = product.user
+
+    if user.username != current_user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You are not allowed to update this product",
+        )
+
+    update_data = update_product.model_dump(
+        exclude_unset=True
+    )  # faqat kelgan malumotlar
+    for key, value in update_data.items():
+        setattr(product, key, value)
+
+    try:
+        await db.commit()
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Failed to update product due to a database constraint",
+        )
+
+    return {
+        "success": True,
+        "message": "Successfully updated",
+        "data": {
+            "id": product.id,
+            "name": product.name,
+            "price": product.price,
+            "user_id": product.user_id,
+        },
+    }
