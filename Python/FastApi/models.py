@@ -29,12 +29,12 @@ class User(Base):
 
 
 class Order(Base):
-    __tablename__ = "order"
-
     class StatusType(str, Enum):
         PENDING = "pending"
         IN_TRANSIT = "in_transit"
         DELIVERED = "delivered"
+
+    __tablename__ = "order"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     status: Mapped[StatusType] = mapped_column(
@@ -84,8 +84,8 @@ class TokenBlackList(Base):
     __tablename__ = "token_blacklist"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    jti: Mapped[str] = mapped_column(String, unique=True, index=True , nullable=False)
-    expires_at: Mapped[datetime] = mapped_column(DateTime , nullable=False)
+    jti: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 
     def __repr__(self):
         return self.jti

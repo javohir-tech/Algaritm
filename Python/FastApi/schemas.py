@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict , Field
 from typing import Optional
 
 
@@ -33,35 +33,32 @@ class LoginModel(BaseModel):
         },
     )
 
+
 class RefreshToken(BaseModel):
-    refresh_token : str
+    refresh_token: str
 
 
 class ProductModel(BaseModel):
-    name : str;
-    price : int ;
-    user_id : Optional[int] = None;
+    name: str
+    price: int
+    user_id: Optional[int] = None
 
     model_config = ConfigDict(
-        from_attributes=True ,  
-        json_schema_extra={
-            "example" : {
-                "name" : "Iphone 14" , 
-                "price" : 550
-            }
-        }
+        from_attributes=True,
+        json_schema_extra={"example": {"name": "Iphone 14", "price": 550}},
     )
+
 
 class ProductPatchModel(BaseModel):
-    name : Optional[str] = None
-    price : Optional[int] = None
+    name: Optional[str] = None
+    price: Optional[int] = None
 
     model_config = ConfigDict(
-        from_attributes=True ,  
-        json_schema_extra={
-            "example" : {
-                "name" : "Iphone 14" , 
-                "price" : 550
-            }
-        }
+        from_attributes=True,
+        json_schema_extra={"example": {"name": "Iphone 14", "price": 550}},
     )
+
+
+class OrderItemModel(BaseModel):
+    quantity: int = Field(ge=0 , le=1000 , description="miqdor 1 da 1000 gacha")
+    product_id : int
