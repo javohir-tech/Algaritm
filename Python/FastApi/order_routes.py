@@ -18,8 +18,49 @@ order_routes = APIRouter(prefix="/order")
 
 
 @order_routes.get("/")
-async def getOrder():
-    return {"message": " Hello world"}
+async def get_orders(
+    db: AsyncSession = Depends(get_db), current_user: str = Depends(verify)
+):
+
+    result_user = await db.execute(select(User).filter(User.username == current_user))
+
+    user = result_user.scalar_one_or_none()
+
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authenticated user could not be found",
+        )
+
+    order_result = await db.execute(
+        select(Order)
+        .options(selectinload(Order.items).selectinload(OrderItem.product))
+        .filter(Order.user_id == user.id)
+    )
+
+    orders = order_result.scalars().all()
+
+    return {
+        "success": True,
+        "message": "successfully fetchedd",
+        "data": [
+            {
+                "id": order.id,
+                "status": order.status,
+                "items": [
+                    {
+                        "id": item.id,
+                        "product_id": item.product_id,
+                        "quantity": item.quantity,
+                        "price": item.price,    
+                        "product_name": item.product.name,
+                    }
+                    for item in order.items
+                ],
+            }
+            for order in orders
+        ],
+    }
 
 
 @order_routes.post("/create")
