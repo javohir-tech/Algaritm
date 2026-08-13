@@ -1,5 +1,6 @@
-from pydantic import BaseModel, ConfigDict , Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional
+from models import Order
 
 
 class UserModel(BaseModel):
@@ -60,5 +61,10 @@ class ProductPatchModel(BaseModel):
 
 
 class OrderItemModel(BaseModel):
-    quantity: int = Field(ge=0 , le=1000 , description="miqdor 1 da 1000 gacha")
-    product_id : int
+    quantity: int = Field(ge=0, le=1000, description="miqdor 1 da 1000 gacha")
+    product_id: int
+
+
+class OrderStatusUpdateModel(BaseModel):
+    status: Order.StatusType
+    
