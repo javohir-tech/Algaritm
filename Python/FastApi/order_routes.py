@@ -51,8 +51,9 @@ async def get_orders(
                     {
                         "id": item.id,
                         "product_id": item.product_id,
+                        "order_id": order.id,
                         "quantity": item.quantity,
-                        "price": item.price,    
+                        "price": item.price,
                         "product_name": item.product.name,
                     }
                     for item in order.items
@@ -134,7 +135,7 @@ async def create_order_item(
             "order_id": new_order_item.order_id,
             "price": new_order_item.price,
             "quantity": new_order_item.quantity,
-            "product": f"{product.name}",
+            "product_name": f"{product.name}",
         },
     }
 
