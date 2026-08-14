@@ -24,6 +24,30 @@ async def get_signup():
     return "sign up path"
 
 
+@auth_routes.get("/me")
+async def get_me(
+    db: AsyncSession = Depends(get_db), current_user: str = Depends(verify)
+):
+    result = await db.execute(select(User).filter(current_user == User.username))
+
+    user = result.scalar_one_or_none()
+
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Authorization user cloud not be found",
+        )
+
+    return {
+        "data": {
+            "username": user.username,
+            "email": user.email,
+            "id": user.id,
+            "is_staff": user.is_staff,
+        }
+    }
+
+
 @auth_routes.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(user: UserModel, db: AsyncSession = Depends(get_db)):
 
@@ -56,7 +80,7 @@ async def signup(user: UserModel, db: AsyncSession = Depends(get_db)):
                 "username": new_user.username,
                 "email": new_user.email,
                 "is_staff": new_user.is_staff,
-                "is_active": new_user.is_active,    
+                "is_active": new_user.is_active,
             },
             "tokens": {"access_token": access_token, "refresh_token": refresh_token},
         },
