@@ -50,12 +50,7 @@ async def createProduct(
     return {
         "success": True,
         "message": "Successfully created  product",
-        "data": {
-            "id": new_product.id,
-            "name": new_product.name,
-            "price": new_product.price,
-            "user_id": new_product.user_id,
-        },
+        "data": new_product
     }
 
 
