@@ -6,6 +6,9 @@ from fastapi import HTTPException
 
 import pdfplumber
 
+
+
+
 from docx import Document
 
 
