@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f4f6f8;
+            font-family: Arial, sans-serif;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 80px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-section {
+            display: flex;
+            gap: 8px;
+        }
+
+        #inputItem {
+            flex: 1;
+            width: auto;
+            padding: 11px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        #inputItem:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        #addBtn {
+            padding: 11px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #addBtn:hover {
+            background: #1d4ed8;
+        }
+
+        ul {
+            padding: 0;
+            margin: 25px 0 0;
+            list-style: none;
+        }
+
+        #todoList li {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 16px;
+            margin-bottom: 10px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        #todoList li:hover {
+            background: #f1f5f9;
+            transform: translateY(-1px);
+        }
+
+        #todoList p {
+            margin: 0;
+            flex: 1;
+            font-size: 16px;
+        }
+
+        .delete_btn {
+            padding: 8px 13px;
+            border: none;
+            border-radius: 7px;
+            background: #ef4444;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .delete_btn:hover {
+            background: #dc2626;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="form-section">
+            <input
+                type="text"
+                id="inputItem"
+                placeholder="Yangi topshiriq"
+            >
+
+            <button id="addBtn">
+                Qo'shish
+            </button>
+        </div>
+
+        <ul id="todoList">
+            <li>
+                <p>Meva sotip olish</p>
+                <button class="delete_btn">
+                    O'chirish
+                </button>
+            </li>
+
+            <li>
+                <p>Dars qilish</p>
+                <button class="delete_btn">
+                    O'chirish
+                </button>
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="./index.js"></script>
+
+</body>
+</html>
