@@ -95,8 +95,7 @@ def check_barcode(code: str) -> dict:
         "check_digit_actual": actual,
     }
     if valid:
-        result["country"] = get_country(code)
-        result["reason"] = "Nazorat raqami to'g'ri"
+       
     else:
         result["reason"] = f"Nazorat raqami xato (kutilgan: {expected}, kodda: {actual})"
     return result
